@@ -4,6 +4,7 @@ param
 (
       [string] $VMAdminUsername = $null,
       [string] $VMAdminPassword  = $null,
+      [string] $Country = $null,
       [string] $PublicMachineName = $null
 )
 
@@ -11,7 +12,6 @@ Set-ExecutionPolicy -ExecutionPolicy unrestricted -Force
 Start-Transcript -Path "C:\DEMO\initialize.txt"
 
 # Other variables
-$Language = "W1"
 $NavAdminUser = "admin"
 $NavAdminPassword = $VMAdminPassword
 $CloudServiceName = $PublicMachineName
@@ -28,7 +28,7 @@ Copy (Join-Path $PSScriptRoot "O365-install.ps1")                 "C:\DEMO\O365 
 Copy (Join-Path $PSScriptRoot "O365-HelperFunctions.ps1")         "C:\DEMO\O365 Integration\HelperFunctions.ps1"
 
 # Initialize Virtual Machine
-('$HardcodeLanguage = "'+$Language+'"')                    | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
+('$HardcodeLanguage = "'+$Country+'"')                    | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
 ('$HardcodeNavAdminUser = "'+$NAVAdminUser+'"')            | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
 ('$HardcodeNavAdminPassword = "'+$NAVAdminPassword+'"')    | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
 ('$HardcodeCloudServiceName = "'+$CloudServiceName+'"')    | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
