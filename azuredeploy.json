@@ -9,13 +9,6 @@
                 "Description": "Location to deploy"
             }
         },
-        "newStorageAccountName": {
-            "type": "string",
-            "defaultValue": "[resourceGroup().name]",
-            "metadata": {
-                "Description": "Name of new storage account"
-            }
-        },
         "vmAdminUsername": {
             "type": "string",
             "defaultValue": "vmadmin",
@@ -28,13 +21,6 @@
             "metadata": {
                 "Description": "Admin Password"
             }
-        },
-        "dnsName": {
-            "type": "string",
-            "defaultValue": "[resourceGroup().name]",
-            "metadata": {
-                "Description": "DNS name"
-            }
         }
     },
     "variables": {
@@ -42,6 +28,8 @@
         "vmExtensionName" : "vmextension1",
         "vmStorageAccountContainerName" : "vhds",
         "publicIPAddressName" : "publicip1",
+        "newStorageAccountName" : "[resourceGroup().name]",
+        "dnsName" : "[resourceGroup().name]",
         "vmName" : "myvm1",
         "vmSize" : "Standard_D2",
         "vmSourceImageName" : "9a03679de0e64e0e94fb8d7fd3c72ff1__Dynamics-NAV-2015-CU7-201505NB.01-127GB",
@@ -55,12 +43,12 @@
         "sourceImageName": "[concat('/',subscription().subscriptionId,'/services/images/',variables('vmSourceImageName'))]",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
         "subnet1Ref": "[concat(variables('vnetID'),'/subnets/',variables('subnet1Name'))]",
-        "accountid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/','Microsoft.Storage/storageAccounts/', parameters('newStorageAccountName'))]"
+        "accountid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/','Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]"
     },
     "resources": [
         {
             "type": "Microsoft.Storage/storageAccounts",
-            "name": "[parameters('newStorageAccountName')]",
+            "name": "[variables('newStorageAccountName')]",
             "apiVersion": "2014-12-01-preview",
             "location": "[parameters('location')]",
             "properties": {
@@ -75,7 +63,7 @@
             "properties": {
                 "publicIPAllocationMethod": "Dynamic",
                 "dnsSettings": {
-                    "domainNameLabel": "[parameters('dnsName')]"
+                    "domainNameLabel": "[variables('dnsName')]"
                 }
             }
         },
@@ -100,7 +88,6 @@
                 ]
             }
         },
-
         {
             "apiVersion": "2014-12-01-preview",
             "type": "Microsoft.Network/networkInterfaces",
@@ -133,7 +120,7 @@
             "name": "[variables('vmName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Storage/storageAccounts/', parameters('newStorageAccountName'))]",
+                "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
                 "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
             ],
             "properties": {
@@ -149,7 +136,7 @@
                     "sourceImage": {
                         "id": "[variables('sourceImageName')]"
                     },
-                    "destinationVhdsContainer": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/')]"
+                    "destinationVhdsContainer": "[concat('http://',variables('newStorageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/')]"
                 },
                 "networkProfile": {
                     "networkInterfaces": [
@@ -182,7 +169,7 @@
                     "commandToExecute": "[concat(variables('ScriptCommandToExecute'), 'initialize.ps1 ', parameters('vmAdminUsername'),' ', parameters('vmAdminPassword'),' ', reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
                 },
                 "protectedSettings": {
-                    "storageAccountName": "[parameters('newStorageAccountName')]",
+                    "storageAccountName": "[variables('newStorageAccountName')]",
                     "storageAccountKey": "[listKeys(variables('accountid'),'2014-12-01-preview').key1]"
                 }
             }
