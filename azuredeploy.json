@@ -39,7 +39,7 @@
         "virtualNetworkName" : "vnet1",
         "nicName" : "nic1",
         "ScriptCommandToExecute" : "powershell.exe -File  ",
-        "ScriptFilePath" : "https://raw.githubusercontent.com/NAVDEMO/AzureDeploy/master/",
+        "ScriptFilePath" : "https://raw.githubusercontent.com/NAVDEMO/Demo/master/",
         "sourceImageName": "[concat('/',subscription().subscriptionId,'/services/images/',variables('vmSourceImageName'))]",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
         "subnet1Ref": "[concat(variables('vnetID'),'/subnets/',variables('subnet1Name'))]",
