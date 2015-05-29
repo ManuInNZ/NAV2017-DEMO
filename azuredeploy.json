@@ -164,7 +164,14 @@
                         "[concat(variables('ScriptFilePath'), 'initialize.ps1')]", 
                         "[concat(variables('ScriptFilePath'), 'Initialize-install.ps1')]",
                         "[concat(variables('ScriptFilePath'), 'Initialize-HelperFunctions.ps1')]",
-                        "[concat(variables('ScriptFilePath'), 'Initialize-Certificate.ps1')]"
+                        "[concat(variables('ScriptFilePath'), 'Initialize-Certificate.ps1')]",
+                        "[concat(variables('ScriptFilePath'), 'BingMaps-install.ps1')]",
+                        "[concat(variables('ScriptFilePath'), 'Clickonce-install.ps1')]",
+                        "[concat(variables('ScriptFilePath'), 'Multitenancy-install.ps1')]",
+                        "[concat(variables('ScriptFilePath'), 'Multitenancy-HelperFunctions.ps1')]",
+                        "[concat(variables('ScriptFilePath'), 'WarmupNAV-HelperFunctions.ps1')]",
+                        "[concat(variables('ScriptFilePath'), 'O365-install.ps1')]",
+                        "[concat(variables('ScriptFilePath'), 'O365-HelperFunctions.ps1')]"
                     ],
                     "commandToExecute": "[concat(variables('ScriptCommandToExecute'), 'initialize.ps1 ', parameters('vmAdminUsername'),' ', parameters('vmAdminPassword'),' ', reference(variables('publicIPAddressName')).dnsSettings.fqdn)]"
                 },

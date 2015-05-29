@@ -16,9 +16,16 @@ $NavAdminUser = "admin"
 $NavAdminPassword = $VMAdminPassword
 $CloudServiceName = $PublicMachineName
 
-Copy (Join-Path $PSScriptRoot "Initialize-install.ps1") "C:\DEMO\Initialize\install.ps1"
-Copy (Join-Path $PSScriptRoot "Initialize-Certificate.ps1") "C:\DEMO\Initialize\Certificate.ps1"
-Copy (Join-Path $PSScriptRoot "Initialize-HelperFunctions.ps1") "C:\DEMO\Initialize\HelperFunctions.ps1"
+Copy (Join-Path $PSScriptRoot "Initialize-install.ps1")           "C:\DEMO\Initialize\install.ps1"
+Copy (Join-Path $PSScriptRoot "Initialize-Certificate.ps1")       "C:\DEMO\Initialize\Certificate.ps1"
+Copy (Join-Path $PSScriptRoot "Initialize-HelperFunctions.ps1")   "C:\DEMO\Initialize\HelperFunctions.ps1"
+Copy (Join-Path $PSScriptRoot "BingMaps-install.ps1")             "C:\DEMO\BingMaps\install.ps1"
+Copy (Join-Path $PSScriptRoot "Clickonce-install.ps1")            "C:\DEMO\Clickonce\install.ps1"
+Copy (Join-Path $PSScriptRoot "Multitenancy-install.ps1")         "C:\DEMO\Multitenancy\install.ps1"
+Copy (Join-Path $PSScriptRoot "Multitenancy-HelperFunctions.ps1") "C:\DEMO\Multitenancy\HelperFunctions.ps1"
+Copy (Join-Path $PSScriptRoot "WarmupNAV-HelperFunctions.ps1")    "C:\DEMO\WarmupNAV\HelperFunctions.ps1"
+Copy (Join-Path $PSScriptRoot "O365-install.ps1")                 "C:\DEMO\O365 Integration\install.ps1"
+Copy (Join-Path $PSScriptRoot "O365-HelperFunctions.ps1")         "C:\DEMO\O365 Integration\HelperFunctions.ps1"
 
 # Initialize Virtual Machine
 ('$HardcodeLanguage = "'+$Language+'"')                    | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
