@@ -166,7 +166,7 @@
                         "[concat(variables('ScriptFilePath'), 'Initialize-HelperFunctions.ps1')]",
                         "[concat(variables('ScriptFilePath'), 'Initialize-Certificate.ps1')]"
                     ],
-                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'), 'initialize.ps1 ', parameters('vmAdminUsername'),' ', parameters('vmAdminPassword'),' ', reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
+                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'), 'initialize.ps1 ', parameters('vmAdminUsername'),' ', parameters('vmAdminPassword'),' ', reference(variables('publicIPAddressName')).dnsSettings.fqdn)]"
                 },
                 "protectedSettings": {
                     "storageAccountName": "[variables('newStorageAccountName')]",
