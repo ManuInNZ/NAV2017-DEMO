@@ -213,7 +213,7 @@
                         "[concat(variables('ScriptFilePath'), 'O365-install.ps1')]",
                         "[concat(variables('ScriptFilePath'), 'O365-HelperFunctions.ps1')]"
                     ],
-                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'), 'initialize.ps1 ', parameters('vmAdminUsername'),' ', parameters('vmAdminPassword'),' ', parameters('country'),' ', reference(variables('publicIPAddressName')).dnsSettings.fqdn),' ',parameters('bingMapsKey'),' ',parameters('clickonce'),' ',parameters('powerBI'),' ',parameters('wordReporting')]"
+                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'), 'initialize.ps1 ', parameters('vmAdminUsername'),' ', parameters('vmAdminPassword'),' ', parameters('country'),' ', reference(variables('publicIPAddressName')).dnsSettings.fqdn)]"
                 },
                 "protectedSettings": {
                     "storageAccountName": "[variables('newStorageAccountName')]",
