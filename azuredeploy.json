@@ -30,6 +30,12 @@
             "metadata": {
                 "Description": "Admin Password"
             }
+        },
+        "bingMapsKey": {
+            "type": "boolean",
+            "metadata": {
+                "Description": "Bing Maps Key (http://msdn.microsoft.com/en-us/library/ff428642.aspx)"
+            }
         }
     },
     "variables": {
