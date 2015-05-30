@@ -4,7 +4,7 @@
     "parameters": {
         "location": {
             "type": "string",
-            "defaultValue": "West US",
+            "defaultValue": "West Europe",
             "allowedValues": ["West US", "East US", "North Central US", "North Europe", "West Europe", "East Asia", "Southeast Asia"],
             "metadata": {
                 "Description": "Location to deploy"
@@ -32,9 +32,34 @@
             }
         },
         "bingMapsKey": {
-            "type": "boolean",
+            "type": "string",
+            "defaultValue": "aukPD6x5PCXwy0a_Iu7Po7XhuRWS--0lZv1sg8Tt53oT4hrJdaPMzwurRWiWBgrN",
             "metadata": {
-                "Description": "Bing Maps Key (http://msdn.microsoft.com/en-us/library/ff428642.aspx)"
+                "Description": "Bing Maps Key (empty to skip Bing Maps Integration)"
+            }
+        },
+        "clickonce": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": ["Yes", "No"],
+            "metadata": {
+                "Description": "Install Clickonce Support"
+            }
+        },
+        "powerBI": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": ["Yes", "No"],
+            "metadata": {
+                "Description": "Install PowerBI Demo"
+            }
+        },
+        "wordReporting": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": ["Yes", "No"],
+            "metadata": {
+                "Description": "Install Word Reporting samples"
             }
         }
     },
@@ -188,7 +213,31 @@
                         "[concat(variables('ScriptFilePath'), 'O365-install.ps1')]",
                         "[concat(variables('ScriptFilePath'), 'O365-HelperFunctions.ps1')]"
                     ],
-                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'), 'initialize.ps1 ', parameters('vmAdminUsername'),' ', parameters('vmAdminPassword'),' ', parameters('country'),' ', reference(variables('publicIPAddressName')).dnsSettings.fqdn)]"
+                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'), 'initialize.ps1 ', parameters('vmAdminUsername'),' ', parameters('vmAdminPassword'),' ', parameters('country'),' ', reference(variables('publicIPAddressName')).dnsSettings.fqdn),' ',parameters('bingMapsKey'),' ',parameters('clickonce'),' ',parameters('powerBI'),' ',parameters('wordReporting')]"
+                },
+                "protectedSettings": {
+                    "storageAccountName": "[variables('newStorageAccountName')]",
+                    "storageAccountKey": "[listKeys(variables('accountid'),'2014-12-01-preview').key1]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('vmName'),'/', variables('vmExtensionName'))]",
+            "apiVersion": "2014-12-01-preview",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Compute",
+                "type": "CustomScriptExtension",
+                "typeHandlerVersion": "1.4",
+                "settings": {
+                    "fileUris": [
+                        "[concat(variables('ScriptFilePath'), 'install.ps1')]"
+                    ],
+                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'), 'install.ps1 ', parameters('bingMapsKey'),' ', parameters('clickonce'),' ', parameters('powerBI'),' ', parameters('wordReporting')]"
                 },
                 "protectedSettings": {
                     "storageAccountName": "[variables('newStorageAccountName')]",
