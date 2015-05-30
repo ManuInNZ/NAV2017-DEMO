@@ -65,7 +65,6 @@
     },
     "variables": {
         "storageAccountType" : "Standard_LRS",
-        "vmExtensionName" : "vmextension1",
         "vmStorageAccountContainerName" : "vhds",
         "publicIPAddressName" : "publicip1",
         "newStorageAccountName" : "[tolower(resourceGroup().name)]",
@@ -189,7 +188,7 @@
         },
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(variables('vmName'),'/', variables('vmExtensionName'))]",
+            "name": "[concat(variables('vmName'),'/vmextension1')]",
             "apiVersion": "2014-12-01-preview",
             "location": "[parameters('location')]",
             "dependsOn": [
@@ -223,11 +222,12 @@
         },
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(variables('vmName'),'/', variables('vmExtensionName'))]",
+            "name": "[concat(variables('vmName'),'/vmextension2')]",
             "apiVersion": "2014-12-01-preview",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
+                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
+                "[concat('Microsoft.Compute/virtualMachines/extensions/', variables('vmName'), '/vmextension1')]"
             ],
             "properties": {
                 "publisher": "Microsoft.Compute",
