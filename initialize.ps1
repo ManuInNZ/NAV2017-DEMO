@@ -5,11 +5,11 @@ param
       [string] $VMAdminUsername = $null,
       [string] $VMAdminPassword  = $null,
       [string] $Country = $null,
-      [string] $PublicMachineName = $null
-      ,[string] $bingMapsKey = $null
-      ,[string] $clickonce  = $null
-      ,[string] $powerBI = $null
-      ,[string] $wordReporting = $null
+      [string] $PublicMachineName = $null,
+      [string] $bingMapsKey = $null,
+      [string] $clickonce = $null,
+      [string] $powerBI = $null,
+      [string] $wordReporting = $null
 
 )
 
