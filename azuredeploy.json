@@ -212,31 +212,17 @@
                         "[concat(variables('ScriptFilePath'), 'O365-install.ps1')]",
                         "[concat(variables('ScriptFilePath'), 'O365-HelperFunctions.ps1')]"
                     ],
-                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'), 'initialize.ps1 ', parameters('vmAdminUsername'),' ', parameters('vmAdminPassword'),' ', parameters('country'),' ', reference(variables('publicIPAddressName')).dnsSettings.fqdn)]"
-                },
-                "protectedSettings": {
-                    "storageAccountName": "[variables('newStorageAccountName')]",
-                    "storageAccountKey": "[listKeys(variables('accountid'),'2014-12-01-preview').key1]"
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(variables('vmName'),'/vmextension2')]",
-            "apiVersion": "2014-12-01-preview",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-            ],
-            "properties": {
-                "publisher": "Microsoft.Compute",
-                "type": "CustomScriptExtension",
-                "typeHandlerVersion": "1.4",
-                "settings": {
-                    "fileUris": [
-                        "[concat(variables('ScriptFilePath'), 'install.ps1')]"
-                    ],
-                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'), 'install.ps1 ', parameters('bingMapsKey'),' ', parameters('clickonce'),' ', parameters('powerBI'),' ', parameters('wordReporting'))]"
+                    "commandToExecute": "[concat(variables('ScriptCommandToExecute')
+                                                 ,'initialize.ps1'
+                                                 ,' ',parameters('vmAdminUsername')
+                                                 ,' ',parameters('vmAdminPassword')
+                                                 ,' ',parameters('country')
+                                                 ,' ',reference(variables('publicIPAddressName')).dnsSettings.fqdn
+                                                 ,' ',parameters('bingMapsKey')
+                                                 ,' ',parameters('clickonce')
+                                                 ,' ',parameters('powerBI')
+                                                 ,' ',parameters('wordReporting')
+                                                )]"
                 },
                 "protectedSettings": {
                     "storageAccountName": "[variables('newStorageAccountName')]",
