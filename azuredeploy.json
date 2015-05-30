@@ -4,7 +4,7 @@
     "parameters": {
         "location": {
             "type": "string",
-            "defaultValue": "West US",
+            "defaultValue": "West Europe",
             "allowedValues": ["West US", "East US", "North Central US", "North Europe", "West Europe", "East Asia", "Southeast Asia"],
             "metadata": {
                 "Description": "Location to deploy"
@@ -30,11 +30,41 @@
             "metadata": {
                 "Description": "Admin Password"
             }
+        },
+        "bingMapsKey": {
+            "type": "string",
+            "defaultValue": "aukPD6x5PCXwy0a_Iu7Po7XhuRWS--0lZv1sg8Tt53oT4hrJdaPMzwurRWiWBgrN",
+            "metadata": {
+                "Description": "Bing Maps Key (empty to skip Bing Maps Integration)"
+            }
+        },
+        "clickonce": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": ["Yes", "No"],
+            "metadata": {
+                "Description": "Install Clickonce Support"
+            }
+        },
+        "powerBI": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": ["Yes", "No"],
+            "metadata": {
+                "Description": "Install PowerBI Demo"
+            }
+        },
+        "wordReporting": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": ["Yes", "No"],
+            "metadata": {
+                "Description": "Install Word Reporting samples"
+            }
         }
     },
     "variables": {
         "storageAccountType" : "Standard_LRS",
-        "vmExtensionName" : "vmextension1",
         "vmStorageAccountContainerName" : "vhds",
         "publicIPAddressName" : "publicip1",
         "newStorageAccountName" : "[tolower(resourceGroup().name)]",
@@ -158,7 +188,7 @@
         },
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(variables('vmName'),'/', variables('vmExtensionName'))]",
+            "name": "[concat(variables('vmName'),'/vmextension1')]",
             "apiVersion": "2014-12-01-preview",
             "location": "[parameters('location')]",
             "dependsOn": [
@@ -182,7 +212,17 @@
                         "[concat(variables('ScriptFilePath'), 'O365-install.ps1')]",
                         "[concat(variables('ScriptFilePath'), 'O365-HelperFunctions.ps1')]"
                     ],
-                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'), 'initialize.ps1 ', parameters('vmAdminUsername'),' ', parameters('vmAdminPassword'),' ', parameters('country'),' ', reference(variables('publicIPAddressName')).dnsSettings.fqdn)]"
+                    "commandToExecute": "[concat(variables('ScriptCommandToExecute')
+                                                 ,'initialize.ps1'
+                                                 ,' ',parameters('vmAdminUsername')
+                                                 ,' ',parameters('vmAdminPassword')
+                                                 ,' ',parameters('country')
+                                                 ,' ',reference(variables('publicIPAddressName')).dnsSettings.fqdn
+                                                 ,' ',parameters('bingMapsKey')
+                                                 ,' ',parameters('clickonce')
+                                                 ,' ',parameters('powerBI')
+                                                 ,' ',parameters('wordReporting')
+                                                )]"
                 },
                 "protectedSettings": {
                     "storageAccountName": "[variables('newStorageAccountName')]",
