@@ -237,7 +237,7 @@
                     "fileUris": [
                         "[concat(variables('ScriptFilePath'), 'install.ps1')]"
                     ],
-                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'), 'install.ps1 ', parameters('bingMapsKey'),' ', parameters('clickonce'),' ', parameters('powerBI'),' ', parameters('wordReporting')]"
+                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'), 'install.ps1 ', parameters('bingMapsKey'),' ', parameters('clickonce'),' ', parameters('powerBI'),' ', parameters('wordReporting'))]"
                 },
                 "protectedSettings": {
                     "storageAccountName": "[variables('newStorageAccountName')]",
