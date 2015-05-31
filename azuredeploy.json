@@ -218,7 +218,7 @@
                                                  ,' ',parameters('vmAdminPassword')
                                                  ,' "',parameters('country'),'"'
                                                  ,' ',reference(variables('publicIPAddressName')).dnsSettings.fqdn
-                                                 ,' ',parameters('bingMapsKey')
+                                                 ,' "',parameters('bingMapsKey'),'"'
                                                  ,' ',parameters('clickonce')
                                                  ,' ',parameters('powerBI')
                                                  ,' ',parameters('wordReporting')
