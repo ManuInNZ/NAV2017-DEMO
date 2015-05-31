@@ -105,6 +105,6 @@ if (Get-NAVWebServerInstance -WebServerInstance AAD) {
     ('Customer MAP with AAD auth.   : '+$AADUrl+'map.aspx')            | Add-Content -Path $URLsFile
 }
 
-Get-Content $URLsFile | Write-Host -ForegroundColor Yellow
+# Get-Content $URLsFile | Write-Host -ForegroundColor Yellow
 
-& notepad.exe $URLsFile
+# & notepad.exe $URLsFile

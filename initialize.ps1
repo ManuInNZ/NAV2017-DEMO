@@ -15,6 +15,17 @@ param
 Set-ExecutionPolicy -ExecutionPolicy unrestricted -Force
 Start-Transcript -Path "C:\DEMO\initialize.txt"
 
+Set-Content -Path "c:\DEMO\username.txt" -Value ([Environment]::UserName)
+
+Set-Content -Path "c:\DEMO\parameters.txt" -Value $VMAdminUsername
+Add-Content -Path "c:\DEMO\parameters.txt" -Value $VMAdminPassword
+Add-Content -Path "c:\DEMO\parameters.txt" -Value $Country
+Add-Content -Path "c:\DEMO\parameters.txt" -Value $PublicMachineName
+Add-Content -Path "c:\DEMO\parameters.txt" -Value $bingMapsKey
+Add-Content -Path "c:\DEMO\parameters.txt" -Value $clickonce
+Add-Content -Path "c:\DEMO\parameters.txt" -Value $powerBI
+Add-Content -Path "c:\DEMO\parameters.txt" -Value $wordReporting
+
 # Other variables
 $NavAdminUser = "admin"
 $NavAdminPassword = $VMAdminPassword
