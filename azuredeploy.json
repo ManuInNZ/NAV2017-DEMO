@@ -64,6 +64,7 @@
         }
     },
     "variables": {
+        "pling" : "'",
         "storageAccountType" : "Standard_LRS",
         "vmStorageAccountContainerName" : "vhds",
         "publicIPAddressName" : "publicip1",
@@ -216,9 +217,9 @@
                                                  ,'initialize.ps1'
                                                  ,' ',parameters('vmAdminUsername')
                                                  ,' ',parameters('vmAdminPassword')
-                                                 ,' ''',parameters('country'),''''
+                                                 ,' ',variables('pling'),parameters('country'),variables('pling')
                                                  ,' ',reference(variables('publicIPAddressName')).dnsSettings.fqdn
-                                                 ,' ''',parameters('bingMapsKey'),''''
+                                                 ,' ',variables('pling'),parameters('bingMapsKey'),variables('pling')
                                                  ,' ',parameters('clickonce')
                                                  ,' ',parameters('powerBI')
                                                  ,' ',parameters('wordReporting')
