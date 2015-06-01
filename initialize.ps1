@@ -15,16 +15,14 @@ param
 Set-ExecutionPolicy -ExecutionPolicy unrestricted -Force
 Start-Transcript -Path "C:\DEMO\initialize.txt"
 
-Set-Content -Path "c:\DEMO\username.txt" -Value ([Environment]::UserName)
-
-Set-Content -Path "c:\DEMO\parameters.txt" -Value $VMAdminUsername
-Add-Content -Path "c:\DEMO\parameters.txt" -Value $VMAdminPassword
-Add-Content -Path "c:\DEMO\parameters.txt" -Value $Country
-Add-Content -Path "c:\DEMO\parameters.txt" -Value $PublicMachineName
-Add-Content -Path "c:\DEMO\parameters.txt" -Value $bingMapsKey
-Add-Content -Path "c:\DEMO\parameters.txt" -Value $clickonce
-Add-Content -Path "c:\DEMO\parameters.txt" -Value $powerBI
-Add-Content -Path "c:\DEMO\parameters.txt" -Value $wordReporting
+Set-Content -Path "c:\DEMO\parameters.txt" -Value "VMAdminUsername = $VMAdminUsername"
+Add-Content -Path "c:\DEMO\parameters.txt" -Value "VMAdminPassword = $VMAdminPassword"
+Add-Content -Path "c:\DEMO\parameters.txt" -Value "Country = $Country"
+Add-Content -Path "c:\DEMO\parameters.txt" -Value "PublicMachineName = $PublicMachineName"
+Add-Content -Path "c:\DEMO\parameters.txt" -Value "bingMapsKey = $bingMapsKey"
+Add-Content -Path "c:\DEMO\parameters.txt" -Value "clickonce = $clickonce"
+Add-Content -Path "c:\DEMO\parameters.txt" -Value "powerBI = $powerBI"
+Add-Content -Path "c:\DEMO\parameters.txt" -Value "wordReporting = $wordReporting"
 
 # Other variables
 $NavAdminUser = "admin"
@@ -52,23 +50,38 @@ try {
     ('$HardcodecertificatePfxFile = "default"')                | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
     . 'c:\DEMO\Initialize\install.ps1' 4> 'C:\DEMO\Initialize\install.log'
 } catch {
-    Set-Content -Path "c:\DEMO\initialize-error.txt" -Value $_.Exception.Message
+    Set-Content -Path "c:\DEMO\initialize\error.txt" -Value $_.Exception.Message
 }
 
-try {
-    if ($bingMapsKey -ne "No") {
+if ($bingMapsKey -ne "No") {
+    try {
         ('$HardcodeBingMapsKey = "'+$bingMapsKey+'"') | Add-Content "c:\DEMO\BingMaps\HardcodeInput.ps1"
         . 'c:\DEMO\BingMaps\install.ps1' 4> 'C:\DEMO\BingMaps\install.log'
+    } catch {
+        Set-Content -Path "c:\DEMO\BingMaps\error.txt" -Value $_.Exception.Message
     }
-    if ($clickonce -eq "Yes") {
+}
+
+if ($clickonce -ne "No") {
+    try {
         . 'c:\DEMO\Clickonce\install.ps1' 4> 'C:\DEMO\Clickonce\install.log'
+    } catch {
+        Set-Content -Path "c:\DEMO\Clickonce\error.txt" -Value $_.Exception.Message
     }
-    if ($powerBI -eq "Yes") {
+}
+
+if ($powerBI -ne "No") {
+    try {
         . 'c:\DEMO\PowerBI\install.ps1' 4> 'C:\DEMO\PowerBI\install.log'
+    } catch {
+        Set-Content -Path "c:\DEMO\PowerBI\error.txt" -Value $_.Exception.Message
     }
-    if ($wordReporting -eq "Yes") {
+}
+
+if ($wordReporting -ne "No") {
+    try {
         . 'c:\DEMO\Word Reporting\install.ps1' 4> 'C:\DEMO\Word Reporting\install.log'
+    } catch {
+        Set-Content -Path "c:\DEMO\Word Reporting\error.txt" -Value $_.Exception.Message
     }
-} catch {
-    Set-Content -Path "c:\DEMO\install-error.txt" -Value $_.Exception.Message
 }

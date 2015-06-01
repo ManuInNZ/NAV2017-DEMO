@@ -28,11 +28,11 @@ $httpWebSiteDirectory = "C:\inetpub\wwwroot\http"
 Remove-Item "$httpWebSiteDirectory\NAV" -Force -Recurse -ErrorAction SilentlyContinue
 Remove-Item "$httpWebSiteDirectory\ADD" -Force -Recurse -ErrorAction SilentlyContinue
 
-Write-Host "Deploying ClickOnce with NavUserPassword authentication"
+Write-Verbose "Deploying ClickOnce with NavUserPassword authentication"
 New-ClickOnceDeployment -Name NAV -PublicMachineName $PublicMachineName -clickOnceWebSiteDirectory $httpWebSiteDirectory
 
 if (Get-NAVWebServerInstance -WebServerInstance AAD) {
-    Write-Host "Deploying ClickOnce with AAD authentication"
+    Write-Verbose "Deploying ClickOnce with AAD authentication"
     New-ClickOnceDeployment -Name AAD -PublicMachineName $PublicMachineName -clickOnceWebSiteDirectory $httpWebSiteDirectory
 }
 
@@ -41,6 +41,6 @@ if (Get-NAVWebServerInstance -WebServerInstance AAD) {
     "ClickOnce with AAD auth.      : http://$PublicMachineName/AAD" | Add-Content -Path $URLsFile
 }
 
-Get-Content $URLsFile | Write-Host -ForegroundColor Yellow
+#Get-Content $URLsFile | Write-Host -ForegroundColor Yellow
 
-& notepad.exe $URLsFile
+#& notepad.exe $URLsFile
