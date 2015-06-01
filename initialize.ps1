@@ -11,6 +11,8 @@ param
       ,[string]$clickonce = $null
       ,[string]$powerBI = $null
       ,[string]$wordReporting = $null
+      ,[string]$Office365UserName = $null
+      ,[string]$Office365Password = $null
 )
 
 Set-ExecutionPolicy -ExecutionPolicy unrestricted -Force
@@ -25,6 +27,8 @@ Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$bingMapsK
 Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$clickonce         = ''' + $clickonce + '''')
 Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$powerBI           = ''' + $powerBI + '''')
 Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$wordReporting     = ''' + $wordReporting + '''')
+Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$Office365UserName = ''' + $Office365UserName + '''')
+Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$Office365Password = ''' + $Office365Password + '''')
 
 # Other variables
 $NavAdminUser = "admin"
@@ -64,6 +68,20 @@ try {
 
 Set-Content -Path "c:\inetpub\wwwroot\http\$MachineName.rdp" -Value ('full address:s:' + $PublicMachineName + ':3389
 prompt for credentials:i:1')
+
+if ($Office365UserName -ne "No") {
+  ('$HardcodeNavAdminUser = "default"')                              | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+  ('$HardcodeSharePointAdminLoginname = "'+$Office365UserName + '"') | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+  ('$HardcodeSharePointAdminPassword = "'+$Office365Password + '"')  | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+  ('$HardcodeSharePointUrl = "default"')                             | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+  ('$HardcodeSharePointSite = "default"')                            | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+  ('$HardcodeSharePointAppCatalogName = "default"')                  | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+  ('$HardcodeSharePointLanguage = "default"')                        | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+  ('$HardcodeSharePointTimezoneId = "default"')                      | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+  ('$HardcodeSharePointAppCatalogUrl = "default"')                   | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+  ('$HardcodeSharePointMultitenant = "' + $multitenancy + '"')       | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+  . 'c:\DEMO\O365 Integration\install.ps1' 4> 'C:\DEMO\O365 Integration\install.log'
+}
 
 if ($bingMapsKey -ne "No") {
     try {

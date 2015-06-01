@@ -69,6 +69,20 @@
             "metadata": {
                 "Description": "Install Word Reporting samples"
             }
+        },
+        "Office365UserName": {
+            "type": "string",
+            "defaultValue": "No",
+            "metadata": {
+                "Description": "Office 365 Administrator Email"
+            }
+        },
+        "Office365Password": {
+            "type": "securestring",
+            "defaultValue": "No",
+            "metadata": {
+                "Description": "Office 365 Administrator Password"
+            }
         }
     },
     "variables": {
@@ -237,6 +251,8 @@
                                                  ,' ',parameters('clickonce')
                                                  ,' ',parameters('powerBI')
                                                  ,' ',parameters('wordReporting')
+                                                 ,' ',parameters('Office365UserName')
+                                                 ,' ',parameters('Office365Password')
                                                 )]"
                 },
                 "protectedSettings": {
