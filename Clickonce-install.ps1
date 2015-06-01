@@ -1,7 +1,7 @@
 ﻿$PSScriptRootV2 = Split-Path $MyInvocation.MyCommand.Definition -Parent 
 Set-StrictMode -Version 2.0
 $verbosePreference = 'Continue'
-$errorActionPreference = 'Inquire'
+$errorActionPreference = 'Stop'
 
 . ("c:\program files\Microsoft Dynamics NAV\80\Service\NavAdminTool.ps1")
 . ("C:\Program Files (x86)\Microsoft Dynamics NAV\80\RoleTailored Client\NavModelTools.ps1")

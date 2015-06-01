@@ -1,7 +1,7 @@
 ﻿$PSScriptRootV2 = Split-Path $MyInvocation.MyCommand.Definition -Parent 
 Set-StrictMode -Version 2.0
 $verbosePreference = 'Continue'
-$errorActionPreference = 'Inquire'
+$errorActionPreference = 'Stop'
 
 $HardcodeFile = (Join-Path $PSScriptRootV2 'HardcodeInput.ps1')
 if (Test-Path -Path $HardcodeFile) {
