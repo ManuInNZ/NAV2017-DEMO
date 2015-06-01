@@ -46,7 +46,7 @@ function New-DemoTenant
         New-NAVDatabase -DatabaseServer localhost -DatabaseInstance NAVDEMO -DatabaseName $TenantID -ServiceAccount "NT AUTHORITY\Network Service" -Timeout 0 -FilePath 'C:\MT\template.bak' -DestinationPath "C:\MT\$TenantID"
 
         # Change Tenant Id in Database
-        Invoke-sqlcmd -ea stop ('update [' + $TenantID + '].[dbo].[$ndo$tenantproperty] set tenantid = ''' + $TenantID + ''';')
+        Invoke-sqlcmd -ea stop -ServerInstance "localhost\NAVDEMO" -QueryTimeout 0 ('update [' + $TenantID + '].[dbo].[$ndo$tenantproperty] set tenantid = ''' + $TenantID + ''';')
 
         Write-Host -ForegroundColor Yellow "Mounting tenant"
         if ($SharePointInstallFolder) {
