@@ -114,6 +114,7 @@ $URLs | % { if ($_.StartsWith("NAV Admin")) { $_ | Add-Content -Path $URLsFile }
 
 "Please open Multitenancy Demo Admin Shell on the desktop to add or remove tenants" | Add-Content -Path $URLsFile
 
-Get-Content $URLsFile | Write-Host -ForegroundColor Yellow
-
-& notepad.exe $URLsFile
+if ([Environment]::UserName -ne "SYSTEM") {
+    Get-Content $URLsFile | Write-Host -ForegroundColor Yellow
+    & notepad.exe $URLsFile
+}

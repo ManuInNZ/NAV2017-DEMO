@@ -352,6 +352,7 @@ $URLsFile = "C:\Users\Public\Desktop\URLs.txt"
 "NAV WebClient with AAD auth.  : $PublicWebBaseURL"         | Add-Content -Path $URLsFile
 "SharePoint Team Site          : $SharePointSiteUrl"        | Add-Content -Path $URLsFile
 
-Get-Content $URLsFile | Write-Host -ForegroundColor Yellow
-
-& notepad.exe $URLsFile
+if ([Environment]::UserName -ne "SYSTEM") {
+    Get-Content $URLsFile | Write-Host -ForegroundColor Yellow
+    & notepad.exe $URLsFile
+}
