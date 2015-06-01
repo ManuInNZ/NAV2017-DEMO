@@ -48,11 +48,15 @@ if ($multitenant -eq 'false') {
 
     Mount-NAVApplication $serverInstance -DatabaseServer localhost -DatabaseInstance NAVDEMO -DatabaseName "App DEMO Database NAV (8-0)" -Force
 
+    # Change Tenant Id in Database
+    Invoke-sqlcmd -ea stop ('update [DEMO Database NAV (8-0)].[dbo].[$ndo$tenantproperty] set tenantid = ''default'';')
+
     if ($SharePointInstallFolder) {
-        Mount-NAVTenant $serverInstance -Id default -AllowAppDatabaseWrite -DatabaseServer localhost -DatabaseInstance NAVDEMO -DatabaseName "DEMO Database NAV (8-0)" -OverwriteTenantIdInDatabase -AlternateId @("$SharePointUrl/sites/default")
+        Mount-NAVTenant $serverInstance -Id default -AllowAppDatabaseWrite -DatabaseServer localhost -DatabaseInstance NAVDEMO -DatabaseName "DEMO Database NAV (8-0)" -AlternateId @("$SharePointUrl/sites/default")
     } else {
-        Mount-NAVTenant $serverInstance -Id default -AllowAppDatabaseWrite -DatabaseServer localhost -DatabaseInstance NAVDEMO -DatabaseName "DEMO Database NAV (8-0)" -OverwriteTenantIdInDatabase
+        Mount-NAVTenant $serverInstance -Id default -AllowAppDatabaseWrite -DatabaseServer localhost -DatabaseInstance NAVDEMO -DatabaseName "DEMO Database NAV (8-0)"
     }
+
 
     Set-Content -Path  "$httpWebSiteDirectory\tenants.txt" -Value "default"
 
