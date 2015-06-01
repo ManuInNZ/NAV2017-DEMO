@@ -33,7 +33,7 @@ $CloudServiceName = $PublicMachineName
 $MachineName = [Environment]::MachineName
 
 Copy (Join-Path $PSScriptRoot "Initialize-install.ps1")               "C:\DEMO\Initialize\install.ps1"
-Copy (Join-Path $PSScriptRoot "Initialize-default.aspx")              "C:\DEMO\Initialize\default.aspx"
+Copy (Join-Path $PSScriptRoot "Initialize-Default.aspx")              "C:\DEMO\Initialize\Default.aspx"
 Copy (Join-Path $PSScriptRoot "Initialize-web.config")                "C:\DEMO\Initialize\web.config"
 Copy (Join-Path $PSScriptRoot "Initialize-Certificate.ps1")           "C:\DEMO\Initialize\Certificate.ps1"
 Copy (Join-Path $PSScriptRoot "Initialize-HelperFunctions.ps1")       "C:\DEMO\Initialize\HelperFunctions.ps1"

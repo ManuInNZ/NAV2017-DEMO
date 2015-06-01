@@ -212,7 +212,7 @@
                         "[concat(variables('ScriptFilePath'), 'initialize.ps1')]", 
                         "[concat(variables('ScriptFilePath'), 'Initialize-install.ps1')]",
                         "[concat(variables('ScriptFilePath'), 'Initialize-web.config')]",
-                        "[concat(variables('ScriptFilePath'), 'Initialize-default.aspx')]",
+                        "[concat(variables('ScriptFilePath'), 'Initialize-Default.aspx')]",
                         "[concat(variables('ScriptFilePath'), 'Initialize-HelperFunctions.ps1')]",
                         "[concat(variables('ScriptFilePath'), 'Initialize-Certificate.ps1')]",
                         "[concat(variables('ScriptFilePath'), 'BingMaps-install.ps1')]",
