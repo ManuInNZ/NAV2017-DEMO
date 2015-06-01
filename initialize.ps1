@@ -16,15 +16,15 @@ param
 Set-ExecutionPolicy -ExecutionPolicy unrestricted -Force
 Start-Transcript -Path "C:\DEMO\initialize.txt"
 
-Set-Content -Path "c:\DEMO\parameters.ps1" -Value ('$VMAdminUsername = ' + $VMAdminUsername)
-Add-Content -Path "c:\DEMO\parameters.ps1" -Value ('$VMAdminPassword = ' + $VMAdminPassword)
-Add-Content -Path "c:\DEMO\parameters.ps1" -Value ('$Country = ' + $Country)
-Add-Content -Path "c:\DEMO\parameters.ps1" -Value ('$PublicMachineName = ' + $PublicMachineName)
-Add-Content -Path "c:\DEMO\parameters.ps1" -Value ('$multitenancy = ' + $multitenancy)
-Add-Content -Path "c:\DEMO\parameters.ps1" -Value ('$bingMapsKey = ' + $bingMapsKey)
-Add-Content -Path "c:\DEMO\parameters.ps1" -Value ('$clickonce = ' + $clickonce)
-Add-Content -Path "c:\DEMO\parameters.ps1" -Value ('$powerBI = ' + $powerBI)
-Add-Content -Path "c:\DEMO\parameters.ps1" -Value ('$wordReporting = ' + $wordReporting)
+Set-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$VMAdminUsername   = ''' + $VMAdminUsername + '''')
+Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$VMAdminPassword   = ''' + $VMAdminPassword + '''')
+Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$Country           = ''' + $Country + '''')
+Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$PublicMachineName = ''' + $PublicMachineName + '''')
+Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$multitenancy      = ''' + $multitenancy + '''')
+Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$bingMapsKey       = ''' + $bingMapsKey + '''')
+Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$clickonce         = ''' + $clickonce + '''')
+Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$powerBI           = ''' + $powerBI + '''')
+Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$wordReporting     = ''' + $wordReporting + '''')
 
 # Other variables
 $NavAdminUser = "admin"
@@ -53,6 +53,7 @@ try {
     . 'c:\DEMO\Initialize\install.ps1' 4> 'C:\DEMO\Initialize\install.log'
 } catch {
     Set-Content -Path "c:\DEMO\initialize\error.txt" -Value $_.Exception.Message
+    throw
 }
 
 if ($bingMapsKey -ne "No") {
