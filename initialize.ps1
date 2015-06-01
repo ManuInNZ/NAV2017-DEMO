@@ -30,18 +30,23 @@ Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$wordRepor
 $NavAdminUser = "admin"
 $NavAdminPassword = $VMAdminPassword
 $CloudServiceName = $PublicMachineName
+$MachineName = [Environment]::MachineName
 
-Copy (Join-Path $PSScriptRoot "Initialize-install.ps1")             "C:\DEMO\Initialize\install.ps1"
-Copy (Join-Path $PSScriptRoot "Initialize-Certificate.ps1")         "C:\DEMO\Initialize\Certificate.ps1"
-Copy (Join-Path $PSScriptRoot "Initialize-HelperFunctions.ps1")     "C:\DEMO\Initialize\HelperFunctions.ps1"
-Copy (Join-Path $PSScriptRoot "BingMaps-install.ps1")               "C:\DEMO\BingMaps\install.ps1"
-Copy (Join-Path $PSScriptRoot "Clickonce-install.ps1")              "C:\DEMO\Clickonce\install.ps1"
-Copy (Join-Path $PSScriptRoot "Multitenancy-install.ps1")           "C:\DEMO\Multitenancy\install.ps1"
-Copy (Join-Path $PSScriptRoot "Multitenancy-HelperFunctions.ps1")   "C:\DEMO\Multitenancy\HelperFunctions.ps1"
-Copy (Join-Path $PSScriptRoot "Multitenancy-MTDemoAdminShell.psm1") "C:\DEMO\Multitenancy\MTDemoAdminShell.ps1"
-Copy (Join-Path $PSScriptRoot "WarmupNAV-HelperFunctions.ps1")      "C:\DEMO\WarmupNAV\HelperFunctions.ps1"
-Copy (Join-Path $PSScriptRoot "O365-install.ps1")                   "C:\DEMO\O365 Integration\install.ps1"
-Copy (Join-Path $PSScriptRoot "O365-HelperFunctions.ps1")           "C:\DEMO\O365 Integration\HelperFunctions.ps1"
+Copy (Join-Path $PSScriptRoot "Initialize-install.ps1")               "C:\DEMO\Initialize\install.ps1"
+Copy (Join-Path $PSScriptRoot "Initialize-default.aspx")              "C:\DEMO\Initialize\default.aspx"
+Copy (Join-Path $PSScriptRoot "Initialize-web.config")                "C:\DEMO\Initialize\web.config"
+Copy (Join-Path $PSScriptRoot "Initialize-Certificate.ps1")           "C:\DEMO\Initialize\Certificate.ps1"
+Copy (Join-Path $PSScriptRoot "Initialize-HelperFunctions.ps1")       "C:\DEMO\Initialize\HelperFunctions.ps1"
+Copy (Join-Path $PSScriptRoot "BingMaps-install.ps1")                 "C:\DEMO\BingMaps\install.ps1"
+Copy (Join-Path $PSScriptRoot "Clickonce-install.ps1")                "C:\DEMO\Clickonce\install.ps1"
+Copy (Join-Path $PSScriptRoot "PowerBI-install.ps1")                  "C:\DEMO\PowerBI\install.ps1"
+Copy (Join-Path $PSScriptRoot "Word Reporting-install.ps1")           "C:\DEMO\Word Reporting\install.ps1"
+Copy (Join-Path $PSScriptRoot "Multitenancy-install.ps1")             "C:\DEMO\Multitenancy\install.ps1"
+Copy (Join-Path $PSScriptRoot "Multitenancy-HelperFunctions.ps1")     "C:\DEMO\Multitenancy\HelperFunctions.ps1"
+Copy (Join-Path $PSScriptRoot "Multitenancy-MTDemoAdminShell.psm1")   "C:\DEMO\Multitenancy\MTDemoAdminShell.ps1"
+Copy (Join-Path $PSScriptRoot "WarmupNAV-HelperFunctions.ps1")        "C:\DEMO\WarmupNAV\HelperFunctions.ps1"
+Copy (Join-Path $PSScriptRoot "O365 Integration-install.ps1")         "C:\DEMO\O365 Integration\install.ps1"
+Copy (Join-Path $PSScriptRoot "O365 Integration-HelperFunctions.ps1") "C:\DEMO\O365 Integration\HelperFunctions.ps1"
 
 try {
     # Initialize Virtual Machine
@@ -56,6 +61,9 @@ try {
     Set-Content -Path "c:\DEMO\initialize\error.txt" -Value $_.Exception.Message
     throw
 }
+
+Set-Content -Path "c:\inetpub\wwwroot\http\$MachineName.rdp" -Value ('full address:s:' + $PublicMachineName + ':3389
+prompt for credentials:i:1')
 
 if ($bingMapsKey -ne "No") {
     try {
