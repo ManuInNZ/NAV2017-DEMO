@@ -6,6 +6,7 @@ param
       ,[string]$VMAdminPassword  = $null
       ,[string]$Country = $null
       ,[string]$PublicMachineName = $null
+      ,[string]$multitenancy = $null
       ,[string]$bingMapsKey = $null
       ,[string]$clickonce = $null
       ,[string]$powerBI = $null
@@ -15,14 +16,15 @@ param
 Set-ExecutionPolicy -ExecutionPolicy unrestricted -Force
 Start-Transcript -Path "C:\DEMO\initialize.txt"
 
-Set-Content -Path "c:\DEMO\parameters.txt" -Value "VMAdminUsername = $VMAdminUsername"
-Add-Content -Path "c:\DEMO\parameters.txt" -Value "VMAdminPassword = $VMAdminPassword"
-Add-Content -Path "c:\DEMO\parameters.txt" -Value "Country = $Country"
-Add-Content -Path "c:\DEMO\parameters.txt" -Value "PublicMachineName = $PublicMachineName"
-Add-Content -Path "c:\DEMO\parameters.txt" -Value "bingMapsKey = $bingMapsKey"
-Add-Content -Path "c:\DEMO\parameters.txt" -Value "clickonce = $clickonce"
-Add-Content -Path "c:\DEMO\parameters.txt" -Value "powerBI = $powerBI"
-Add-Content -Path "c:\DEMO\parameters.txt" -Value "wordReporting = $wordReporting"
+Set-Content -Path "c:\DEMO\parameters.ps1" -Value ('$VMAdminUsername = ' + $VMAdminUsername)
+Add-Content -Path "c:\DEMO\parameters.ps1" -Value ('$VMAdminPassword = ' + $VMAdminPassword)
+Add-Content -Path "c:\DEMO\parameters.ps1" -Value ('$Country = ' + $Country)
+Add-Content -Path "c:\DEMO\parameters.ps1" -Value ('$PublicMachineName = ' + $PublicMachineName)
+Add-Content -Path "c:\DEMO\parameters.ps1" -Value ('$multitenancy = ' + $multitenancy)
+Add-Content -Path "c:\DEMO\parameters.ps1" -Value ('$bingMapsKey = ' + $bingMapsKey)
+Add-Content -Path "c:\DEMO\parameters.ps1" -Value ('$clickonce = ' + $clickonce)
+Add-Content -Path "c:\DEMO\parameters.ps1" -Value ('$powerBI = ' + $powerBI)
+Add-Content -Path "c:\DEMO\parameters.ps1" -Value ('$wordReporting = ' + $wordReporting)
 
 # Other variables
 $NavAdminUser = "admin"
@@ -62,15 +64,7 @@ if ($bingMapsKey -ne "No") {
     }
 }
 
-if ($clickonce -ne "No") {
-    try {
-        . 'c:\DEMO\Clickonce\install.ps1' 4> 'C:\DEMO\Clickonce\install.log'
-    } catch {
-        Set-Content -Path "c:\DEMO\Clickonce\error.txt" -Value $_.Exception.Message
-    }
-}
-
-if ($powerBI -ne "No") {
+if ($powerBI -eq "Yes") {
     try {
         . 'c:\DEMO\PowerBI\install.ps1' 4> 'C:\DEMO\PowerBI\install.log'
     } catch {
@@ -78,10 +72,30 @@ if ($powerBI -ne "No") {
     }
 }
 
-if ($wordReporting -ne "No") {
+if ($wordReporting -eq "Yes") {
     try {
         . 'c:\DEMO\Word Reporting\install.ps1' 4> 'C:\DEMO\Word Reporting\install.log'
     } catch {
         Set-Content -Path "c:\DEMO\Word Reporting\error.txt" -Value $_.Exception.Message
     }
+}
+
+if ($multitenancy -eq "Yes") {
+
+    try {
+        . 'c:\DEMO\Multitenancy\install.ps1' 4> 'C:\DEMO\Multitenancy\install.log'
+    } catch {
+        Set-Content -Path "c:\DEMO\Multitenancy\error.txt" -Value $_.Exception.Message
+    }
+
+} else {
+
+    if ($clickonce -eq "Yes") {
+        try {
+            . 'c:\DEMO\Clickonce\install.ps1' 4> 'C:\DEMO\Clickonce\install.log'
+        } catch {
+            Set-Content -Path "c:\DEMO\Clickonce\error.txt" -Value $_.Exception.Message
+        }
+    }
+
 }

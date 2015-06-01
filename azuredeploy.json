@@ -31,6 +31,14 @@
                 "Description": "Admin Password"
             }
         },
+        "multitenancy": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": ["Yes", "No"],
+            "metadata": {
+                "Description": "Install Multi-tenancy"
+            }
+        },
         "bingMapsKey": {
             "type": "string",
             "defaultValue": "aukPD6x5PCXwy0a_Iu7Po7XhuRWS--0lZv1sg8Tt53oT4hrJdaPMzwurRWiWBgrN",
@@ -219,6 +227,7 @@
                                                  ,' ',parameters('vmAdminPassword')
                                                  ,' ',parameters('country')
                                                  ,' ',reference(variables('publicIPAddressName')).dnsSettings.fqdn
+                                                 ,' ',parameters('multitenancy')
                                                  ,' ',parameters('bingMapsKey')
                                                  ,' ',parameters('clickonce')
                                                  ,' ',parameters('powerBI')

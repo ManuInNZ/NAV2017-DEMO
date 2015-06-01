@@ -100,7 +100,7 @@ Get-NAVServerSession -ServerInstance $serverInstance | % { Remove-NAVServerSessi
 $URLsFile = "C:\Users\Public\Desktop\URLs.txt"
 
 ('Customer MAP User/Pswd. auth. : '+$PublicWebBaseUrl+'map.aspx')      | Add-Content -Path $URLsFile
-if (Get-NAVWebServerInstance -WebServerInstance AAD) {
+if (Test-Path 'C:\inetpub\wwwroot\AAD' -PathType Container) {
     $AADUrl = $PublicWebBaseUrl.Replace('/NAV/','/AAD/')
     ('Customer MAP with AAD auth.   : '+$AADUrl+'map.aspx')            | Add-Content -Path $URLsFile
 }
