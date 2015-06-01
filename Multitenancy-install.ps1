@@ -27,8 +27,7 @@ if (!$thumbprint) {
     while ($true) { throw "You need to run the initialize Server script before applying demo packages." }
 }
 
-$webServerInstance = Get-NAVWebServerInstance -WebServerInstance AAD
-if ($webServerInstance) {
+if (Test-Path 'C:\inetpub\wwwroot\AAD' -PathType Container) {
     if (!$SharePointInstallFolder) {
         while ($true) { throw "When installing O365 integration you answered NO to the question on whether you were going to install multi-tenancy." }
     }

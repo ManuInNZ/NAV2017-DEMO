@@ -41,6 +41,6 @@ if (Test-Path 'C:\inetpub\wwwroot\AAD' -PathType Container) {
     "ClickOnce with AAD auth.      : http://$PublicMachineName/AAD" | Add-Content -Path $URLsFile
 }
 
-#Get-Content $URLsFile | Write-Host -ForegroundColor Yellow
+Get-Content $URLsFile | Write-Host -ForegroundColor Yellow
 
-#& notepad.exe $URLsFile
+& notepad.exe $URLsFile
