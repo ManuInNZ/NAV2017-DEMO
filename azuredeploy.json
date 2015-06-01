@@ -217,7 +217,7 @@
                         "[concat(variables('ScriptFilePath'), 'Clickonce-install.ps1')]",
                         "[concat(variables('ScriptFilePath'), 'Multitenancy-install.ps1')]",
                         "[concat(variables('ScriptFilePath'), 'Multitenancy-HelperFunctions.ps1')]",
-                        "[concat(variables('ScriptFilePath'), 'Multitenancy-MTDemoAdminShell.ps1')]",
+                        "[concat(variables('ScriptFilePath'), 'Multitenancy-MTDemoAdminShell.psm1')]",
                         "[concat(variables('ScriptFilePath'), 'WarmupNAV-HelperFunctions.ps1')]",
                         "[concat(variables('ScriptFilePath'), 'O365-install.ps1')]",
                         "[concat(variables('ScriptFilePath'), 'O365-HelperFunctions.ps1')]"
