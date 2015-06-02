@@ -104,14 +104,14 @@ function Set-NavSingleSignOnWithOffice365
            
         if (!$SkipWebServerConfiguration)
         {
-#            # Get web server instance name and its derived variables
-#            $webServerInstance = Validate-NavWebServerInstance -WebServerInstance $NavWebServerInstanceName
-#            if (!$webServerInstance)
-#            {
-#            	Write-Error "Either you have not specified a web server instance name and there is more than one, or the instance that you specified could not be found."
-#            	return
-#            }    
-            $NavWebsiteName = "Microsoft Dynamics NAV 2015 Web Client"   # $webServerInstance.Website
+            # Get web server instance name and its derived variables
+            $webServerInstance = Validate-NavWebServerInstance -WebServerInstance $NavWebServerInstanceName
+            if (!$webServerInstance)
+            {
+            	Write-Error "Either you have not specified a web server instance name and there is more than one, or the instance that you specified could not be found."
+            	return
+            }    
+            $NavWebsiteName = $webServerInstance.Website
         }
 
         if (!$SkipNavServerConfiguration)
@@ -309,28 +309,28 @@ function ImportPrerequisites
     }
 
     Import-NAVManagementModule -ErrorAction Stop
-    Import-Module WebAdministration -ErrorAction Stop
+    #Import-Module WebAdministration -ErrorAction Stop
 }
 
-#function Validate-NavWebServerInstance([string] $WebServerInstance)
-#{
-#    Set-Location "c:\demo"
-#    if (!$WebServerInstance)
-#    {
-#        $instance = Get-NAVWebServerInstance
-#
-#        if ($instance.Count -and $instance.Count -gt 1)
-#        {
-#            return $null
-#        }
-#    }
-#    else
-#    {
-#        $instance = Get-NAVWebServerInstance -WebServerInstance $WebServerInstance
-#    }
-#
-#    return $instance
-#}
+function Validate-NavWebServerInstance([string] $WebServerInstance)
+{
+    Set-Location "c:\demo"
+    if (!$WebServerInstance)
+    {
+        $instance = Get-NAVWebServerInstance
+
+        if ($instance.Count -and $instance.Count -gt 1)
+        {
+            return $null
+        }
+    }
+    else
+    {
+        $instance = Get-NAVWebServerInstance -WebServerInstance $WebServerInstance
+    }
+
+    return $instance
+}
 
 function Get-AadAppIdUriFromNavWebServerInstanceUri([string] $NavWebServerInstanceAddress)
 {
