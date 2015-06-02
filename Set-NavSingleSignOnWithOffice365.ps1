@@ -314,7 +314,7 @@ function ImportPrerequisites
 
 function Validate-NavWebServerInstance([string] $WebServerInstance)
 {
-    SetLocation "c:\demo"
+    Set-Location "c:\demo"
     if (!$WebServerInstance)
     {
         $instance = Get-NAVWebServerInstance
