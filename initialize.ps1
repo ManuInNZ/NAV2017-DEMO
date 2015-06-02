@@ -34,7 +34,7 @@ Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$Office365
 $NavAdminUser = "admin"
 $NavAdminPassword = $VMAdminPassword
 $CloudServiceName = $PublicMachineName
-$MachineName = [Environment]::MachineName
+$MachineName = [Environment]::MachineName.ToLowerInvariant()
 
 Copy (Join-Path $PSScriptRoot "Initialize-install.ps1")               "C:\DEMO\Initialize\install.ps1"
 Copy (Join-Path $PSScriptRoot "Initialize-Default.aspx")              "C:\DEMO\Initialize\Default.aspx"
@@ -49,9 +49,10 @@ Copy (Join-Path $PSScriptRoot "Multitenancy-install.ps1")             "C:\DEMO\M
 Copy (Join-Path $PSScriptRoot "Multitenancy-HelperFunctions.ps1")     "C:\DEMO\Multitenancy\HelperFunctions.ps1"
 Copy (Join-Path $PSScriptRoot "Multitenancy-MTDemoAdminShell.psm1")   "C:\DEMO\Multitenancy\MTDemoAdminShell.ps1"
 Copy (Join-Path $PSScriptRoot "WarmupNAV-HelperFunctions.ps1")        "C:\DEMO\WarmupNAV\HelperFunctions.ps1"
-Copy (Join-Path $PSScriptRoot "Set-NavSingleSignOnWithOffice365.ps1") "C:\NAVDVD\W1\WindowsPowerShellScripts\NAVOffice365Administration\Set-NavSingleSignOnWithOffice365.ps1"
 Copy (Join-Path $PSScriptRoot "O365 Integration-install.ps1")         "C:\DEMO\O365 Integration\install.ps1"
 Copy (Join-Path $PSScriptRoot "O365 Integration-HelperFunctions.ps1") "C:\DEMO\O365 Integration\HelperFunctions.ps1"
+
+$error = $false
 
 try {
     # Initialize Virtual Machine
@@ -64,6 +65,7 @@ try {
     . 'c:\DEMO\Initialize\install.ps1' 4> 'C:\DEMO\Initialize\install.log'
 } catch {
     Set-Content -Path "c:\DEMO\initialize\error.txt" -Value $_.Exception.Message
+    Write-Verbose $_.Exception.Message
     throw
 }
 
@@ -76,6 +78,8 @@ if ($bingMapsKey -ne "No") {
         . 'c:\DEMO\BingMaps\install.ps1' 4> 'C:\DEMO\BingMaps\install.log'
     } catch {
         Set-Content -Path "c:\DEMO\BingMaps\error.txt" -Value $_.Exception.Message
+        Write-Verbose $_.Exception.Message
+        $error = $true
     }
 }
 
@@ -84,6 +88,8 @@ if ($powerBI -eq "Yes") {
         . 'c:\DEMO\PowerBI\install.ps1' 4> 'C:\DEMO\PowerBI\install.log'
     } catch {
         Set-Content -Path "c:\DEMO\PowerBI\error.txt" -Value $_.Exception.Message
+        Write-Verbose $_.Exception.Message
+        $error = $true
     }
 }
 
@@ -92,6 +98,8 @@ if ($wordReporting -eq "Yes") {
         . 'c:\DEMO\Word Reporting\install.ps1' 4> 'C:\DEMO\Word Reporting\install.log'
     } catch {
         Set-Content -Path "c:\DEMO\Word Reporting\error.txt" -Value $_.Exception.Message
+        Write-Verbose $_.Exception.Message
+        $error = $true
     }
 }
 
@@ -110,6 +118,8 @@ if ($Office365UserName -ne "No") {
         . 'c:\DEMO\O365 Integration\install.ps1' 4> 'C:\DEMO\O365 Integration\install.log'
     } catch {
         Set-Content -Path "c:\DEMO\O365 Integration\error.txt" -Value $_.Exception.Message
+        Write-Verbose $_.Exception.Message
+        $error = $true
     }
 }
 
@@ -119,6 +129,8 @@ if ($multitenancy -eq "Yes") {
         . 'c:\DEMO\Multitenancy\install.ps1' 4> 'C:\DEMO\Multitenancy\install.log'
     } catch {
         Set-Content -Path "c:\DEMO\Multitenancy\error.txt" -Value $_.Exception.Message
+        Write-Verbose $_.Exception.Message
+        $error = $true
     }
 
 } else {
@@ -128,7 +140,12 @@ if ($multitenancy -eq "Yes") {
             . 'c:\DEMO\Clickonce\install.ps1' 4> 'C:\DEMO\Clickonce\install.log'
         } catch {
             Set-Content -Path "c:\DEMO\Clickonce\error.txt" -Value $_.Exception.Message
+            Write-Verbose $_.Exception.Message
+            $error = $true
         }
     }
+}
 
+if ($error) {
+    throw "Error installing demo packages"
 }

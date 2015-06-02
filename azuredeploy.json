@@ -41,7 +41,7 @@
         },
         "bingMapsKey": {
             "type": "string",
-            "defaultValue": "aukPD6x5PCXwy0a_Iu7Po7XhuRWS--0lZv1sg8Tt53oT4hrJdaPMzwurRWiWBgrN",
+            "defaultValue": "No",
             "metadata": {
                 "Description": "Bing Maps Key (empty to skip Bing Maps Integration)"
             }
@@ -237,7 +237,6 @@
                         "[concat(variables('ScriptFilePath'), 'Multitenancy-HelperFunctions.ps1')]",
                         "[concat(variables('ScriptFilePath'), 'Multitenancy-MTDemoAdminShell.psm1')]",
                         "[concat(variables('ScriptFilePath'), 'WarmupNAV-HelperFunctions.ps1')]",
-                        "[concat(variables('ScriptFilePath'), 'Set-NavSingleSignOnWithOffice365.ps1')]",
                         "[concat(variables('ScriptFilePath'), 'O365 Integration-install.ps1')]",
                         "[concat(variables('ScriptFilePath'), 'O365 Integration-HelperFunctions.ps1')]"
                     ],
