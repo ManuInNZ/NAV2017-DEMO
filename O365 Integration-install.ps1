@@ -195,7 +195,11 @@ if (!(Test-Path "C:\inetpub\wwwroot\AAD")) {
 
 # Enable single sign on
 Write-Verbose "Enable Single Sign-On"
+
+$location = Get-Location
+Set-Location -Path IIS:\SslBindings
 Set-NavSingleSignOnWithOffice365 -NavServerInstance $serverInstance -NavWebServerInstanceName AAD -NavUser $NavAdminUser -AuthenticationEmail $SharePointAdminLoginname -AuthenticationEmailPassword $SharePointAdminSecurePassword -NavServerCertificateThumbprint $thumbprint -NavWebAddress $publicWebBaseURL -Verbose
+Set-Location -Path $location
 
 # Import NAV Objects
 Write-Verbose "Import NAV Objects"
