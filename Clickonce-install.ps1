@@ -37,7 +37,7 @@ if (Test-Path 'C:\inetpub\wwwroot\AAD' -PathType Container) {
 }
 
 $URLsFile = "C:\Users\Public\Desktop\URLs.txt""ClickOnce with User/Pswd auth.: http://$PublicMachineName/NAV"     | Add-Content -Path $URLsFile
-if (Test-Path 'C:\inetpub\wwwroot\AAD' -PathType Container) {
+if (Get-NAVWebServerInstance -WebServerInstance AAD) {
     "ClickOnce with AAD auth.      : http://$PublicMachineName/AAD" | Add-Content -Path $URLsFile
 }
 

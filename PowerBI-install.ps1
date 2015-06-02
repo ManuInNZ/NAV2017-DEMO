@@ -43,5 +43,7 @@ New-NAVWebService $serverInstance -ObjectType Query -ObjectId 50001 -ServiceName
 New-NAVWebService $serverInstance -ObjectType Query -ObjectId 50002 -ServiceName SalesInvoiceLine -Published:$true
 New-NAVWebService $serverInstance -ObjectType Page  -ObjectId    14 -ServiceName SalesPeople      -Published:$true
 
-# Show Blog post about PowerBI
-Start-Process "http://blogs.msdn.com/b/nav/archive/2015/03/27/powerbi-com-and-microsoft-dynamics-nav-2015.aspx"
+if ([Environment]::UserName -ne "SYSTEM") {
+    # Show Blog post about PowerBI
+    Start-Process "http://blogs.msdn.com/b/nav/archive/2015/03/27/powerbi-com-and-microsoft-dynamics-nav-2015.aspx"
+}

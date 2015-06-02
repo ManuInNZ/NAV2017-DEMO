@@ -27,6 +27,7 @@
 	Get-Item Cert:\LocalMachine\my\$Thumbprint | New-Item $IP!$Port
 
 	# Change location to former location
+	Set-Location -Path IIS:\
 	Set-Location -Path $location
 	Write-Verbose "Certificate added to binding"
 }

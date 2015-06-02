@@ -280,12 +280,12 @@ $newWebClientLink = "https://$PublicMachineName/$serverInstance/WebClient"
 $mht = $mht.Replace($orgWebClientLink, $newWebClientLink)
 [System.IO.File]::WriteAllText("C:\DEMO\Welcome to Microsoft Dynamics NAV on Microsoft Azure.mht", $mht, [System.Text.Encoding]::GetEncoding(28591))
 
-$URLsFile = "C:\Users\Public\Desktop\URLs.txt""Web Client URL                : https://$PublicMachineName/$serverInstance/WebClient"               | Add-Content -Path $URLsFile
-"Tablet Client URL             : https://$PublicMachineName/$serverInstance/WebClient/tablet.aspx"   | Add-Content -Path $URLsFile
-("SOAP Services URL            : https://$PublicMachineName" + ":7047/$serverInstance/WS/Services")  | Add-Content -Path $URLsFile
-("OData Services URL           : https://$PublicMachineName" + ":7048/$serverInstance/OData/")       | Add-Content -Path $URLsFile
-"NAV Admin Username            : $NAVAdminUser"                                                      | Add-Content -Path $URLsFile
-"NAV Admin Password            : $NAVAdminPassword"                                                  | Add-Content -Path $URLsFile
+$URLsFile = "C:\Users\Public\Desktop\URLs.txt"("Web Client URL                : https://$PublicMachineName/$serverInstance/WebClient")               | Add-Content -Path $URLsFile
+("Tablet Client URL             : https://$PublicMachineName/$serverInstance/WebClient/tablet.aspx")   | Add-Content -Path $URLsFile
+("SOAP Services URL             : https://$PublicMachineName" + ":7047/$serverInstance/WS/Services")   | Add-Content -Path $URLsFile
+("OData Services URL            : https://$PublicMachineName" + ":7048/$serverInstance/OData/")        | Add-Content -Path $URLsFile
+("NAV Admin Username            : $NAVAdminUser")                                                      | Add-Content -Path $URLsFile
+("NAV Admin Password            : $NAVAdminPassword")                                                  | Add-Content -Path $URLsFile
 
 # Turn off IE Enhanced Security Configuration
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}" -Name "IsInstalled" -Value 0
