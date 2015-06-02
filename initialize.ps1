@@ -49,6 +49,7 @@ Copy (Join-Path $PSScriptRoot "Multitenancy-install.ps1")             "C:\DEMO\M
 Copy (Join-Path $PSScriptRoot "Multitenancy-HelperFunctions.ps1")     "C:\DEMO\Multitenancy\HelperFunctions.ps1"
 Copy (Join-Path $PSScriptRoot "Multitenancy-MTDemoAdminShell.psm1")   "C:\DEMO\Multitenancy\MTDemoAdminShell.ps1"
 Copy (Join-Path $PSScriptRoot "WarmupNAV-HelperFunctions.ps1")        "C:\DEMO\WarmupNAV\HelperFunctions.ps1"
+Copy (Join-Path $PSScriptRoot "Set-NavSingleSignOnWithOffice365.ps1") "C:\NAVDVD\W1\WindowsPowerShellScripts\NAVOffice365Administration\Set-NavSingleSignOnWithOffice365.ps1"
 Copy (Join-Path $PSScriptRoot "O365 Integration-install.ps1")         "C:\DEMO\O365 Integration\install.ps1"
 Copy (Join-Path $PSScriptRoot "O365 Integration-HelperFunctions.ps1") "C:\DEMO\O365 Integration\HelperFunctions.ps1"
 
