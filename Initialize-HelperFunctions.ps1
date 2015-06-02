@@ -24,7 +24,7 @@
     Get-Item "$IP!$Port" | Remove-Item
 
 	# Bind certificate to site
-	Get-Item Cert:\LocalMachine\my\$Thumbprint | New-Item $IP!$Port
+	Get-Item Cert:\LocalMachine\Root\$Thumbprint | New-Item $IP!$Port
 
 	# Change location to former location
 	Set-Location -Path $location
