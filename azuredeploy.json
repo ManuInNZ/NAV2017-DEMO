@@ -198,7 +198,14 @@
                     "sourceImage": {
                         "id": "[variables('sourceImageName')]"
                     },
-                    "destinationVhdsContainer": "[concat('http://',variables('newStorageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/')]"
+                    "osDisk": {
+                        "name": "osdisk",
+                        "vhd": {
+                        "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.windows.net/vhds0/','osdisk.vhd')]"
+                        },
+                        "caching": "ReadWrite",
+                        "createOption": "FromImage"
+                    }
                 },
                 "networkProfile": {
                     "networkInterfaces": [
