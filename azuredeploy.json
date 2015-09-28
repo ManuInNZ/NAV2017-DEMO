@@ -111,14 +111,14 @@
         {
             "type": "Microsoft.Storage/storageAccounts",
             "name": "[variables('newStorageAccountName')]",
-            "apiVersion": "2014-12-01-preview",
+            "apiVersion": "2015-06-15",
             "location": "[parameters('location')]",
             "properties": {
                 "accountType": "[variables('storageAccountType')]"
             }
         },
         {
-            "apiVersion": "2014-12-01-preview",
+            "apiVersion": "2015-06-15",
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "[variables('publicIPAddressName')]",
             "location": "[parameters('location')]",
@@ -130,7 +130,7 @@
             }
         },
         {
-            "apiVersion": "2014-12-01-preview",
+            "apiVersion": "2015-06-15",
             "type": "Microsoft.Network/virtualNetworks",
             "name": "[variables('virtualNetworkName')]",
             "location": "[parameters('location')]",
@@ -151,7 +151,7 @@
             }
         },
         {
-            "apiVersion": "2014-12-01-preview",
+            "apiVersion": "2015-06-15",
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[variables('nicName')]",
             "location": "[parameters('location')]",
@@ -177,7 +177,7 @@
             }
         },
         {
-            "apiVersion": "2014-12-01-preview",
+            "apiVersion": "2015-06-15",
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[variables('vmName')]",
             "location": "[parameters('location')]",
@@ -212,7 +212,7 @@
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "name": "[concat(variables('vmName'),'/vmextension1')]",
-            "apiVersion": "2014-12-01-preview",
+            "apiVersion": "2015-06-15",
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
