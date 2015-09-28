@@ -229,7 +229,7 @@
                 },
                 "protectedSettings": {
                     "storageAccountName": "[variables('newStorageAccountName')]",
-                    "storageAccountKey": "[listKeys(variables('accountid'),'2014-12-01-preview').key1]"
+                    "storageAccountKey": "[listKeys(variables('accountid'),'2015-06-15').key1]"
                 }
             }
         }
