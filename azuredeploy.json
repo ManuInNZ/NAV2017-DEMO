@@ -66,14 +66,14 @@
             "type": "string",
             "defaultValue": "No",
             "metadata": {
-                "Description": Enter Office 365 Administrator Email (enter No to skip O365 integration)"
+                "Description": "Enter Office 365 Administrator Email (enter No to skip O365 integration)"
             }
         },
         "Office365Password": {
             "type": "securestring",
             "defaultValue": "No",
             "metadata": {
-                "Description": "OEnter ffice 365 Administrator Password"
+                "Description": "Enter Office 365 Administrator Password"
             }
         }
     },
