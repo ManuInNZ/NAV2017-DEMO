@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "name": {
+        "vmName": {
             "type": "string",
             "metadata": {
                 "Description": "Select the name of the Microsoft Dynamics NAV 2016 deployment"
@@ -89,8 +89,7 @@
         "vmStorageAccountContainerName" : "vhds",
         "publicIPAddressName" : "publicip1",
         "newStorageAccountName" : "[tolower(resourceGroup().name)]",
-        "dnsName" : "[tolower(name)]",
-        "vmName" : "Server1",
+        "dnsName" : "[tolower(vmName)]",
         "vmSize" : "Standard_D2",
         "vmSourceImageName" : "9a03679de0e64e0e94fb8d7fd3c72ff1__Dynamics-NAV-2015-CU8-201506NB.01-127GB",
         "addressPrefix":"10.0.0.0/16",
