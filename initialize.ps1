@@ -10,7 +10,6 @@ param
       ,[string]$bingMapsKey = $null
       ,[string]$clickonce = $null
       ,[string]$powerBI = $null
-      ,[string]$wordReporting = $null
       ,[string]$Office365UserName = $null
       ,[string]$Office365Password = $null
 )
@@ -26,7 +25,6 @@ Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$multitena
 Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$bingMapsKey       = ''' + $bingMapsKey + '''')
 Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$clickonce         = ''' + $clickonce + '''')
 Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$powerBI           = ''' + $powerBI + '''')
-Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$wordReporting     = ''' + $wordReporting + '''')
 Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$Office365UserName = ''' + $Office365UserName + '''')
 Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$Office365Password = ''' + $Office365Password + '''')
 
@@ -93,16 +91,6 @@ if ($powerBI -eq "Yes") {
     }
 }
 
-if ($wordReporting -eq "Yes") {
-    try {
-        . 'c:\DEMO\Word Reporting\install.ps1' 4> 'C:\DEMO\Word Reporting\install.log'
-    } catch {
-        Set-Content -Path "c:\DEMO\Word Reporting\error.txt" -Value $_.Exception.Message
-        Write-Verbose $_.Exception.Message
-        $error = $true
-    }
-}
-
 if ($Office365UserName -ne "No") {
     try {
         ('$HardcodeNavAdminUser = "default"')                                      | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
@@ -110,7 +98,6 @@ if ($Office365UserName -ne "No") {
         ('$HardcodeSharePointAdminPassword = "'+$Office365Password + '"')          | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
         ('$HardcodeSharePointUrl = "default"')                                     | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
         ('$HardcodeSharePointSite = "' + ($PublicMachineName.Split('.')[0]) + '"') | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
-        ('$HardcodeSharePointAppCatalogName = "default"')                          | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
         ('$HardcodeSharePointLanguage = "default"')                                | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
         ('$HardcodeSharePointTimezoneId = "default"')                              | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
         ('$HardcodeSharePointAppCatalogUrl = "default"')                           | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
