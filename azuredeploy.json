@@ -224,7 +224,7 @@
                     "fileUris": [
                         "[concat(variables('ScriptFilePath'), 'initialize.ps1')]"
                     ],
-                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'),'initialize.ps1',' ',parameters('vmAdminUsername'),' ',parameters('vmAdminPassword'),' \"',parameters('country'),'\"',' ',reference(variables('publicIPAddressName')).dnsSettings.fqdn,' ',parameters('multitenancy'),' ',parameters('bingMapsKey'),' ',parameters('clickonce'),' ',parameters('powerBI'),' ',parameters('wordReporting'),' ',parameters('Office365UserName'),' ',parameters('Office365Password'))]"
+                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'),'initialize.ps1',' ',parameters('vmAdminUsername'),' ',parameters('vmAdminPassword'),' \"',parameters('country'),'\"',' ',reference(variables('publicIPAddressName')).dnsSettings.fqdn,' ',parameters('multitenancy'),' ',parameters('bingMapsKey'),' ',parameters('clickonce'),' ',parameters('powerBI'),' ',parameters('Office365UserName'),' ',parameters('Office365Password'))]"
                 },
                 "protectedSettings": {
                     "storageAccountName": "[variables('newStorageAccountName')]",
