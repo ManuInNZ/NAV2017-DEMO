@@ -7,7 +7,7 @@
             "defaultValue": "West Europe",
             "allowedValues": ["West US", "East US", "North Central US", "North Europe", "West Europe", "East Asia", "Southeast Asia"],
             "metadata": {
-                "Description": "Location to deploy"
+                "Description": "Select Location in which to deploy Microsoft Dynamics NAV 2016"
             }
         },
         "country": {
@@ -15,20 +15,20 @@
             "defaultValue": "W1 - International",
             "allowedValues": ["W1 - International", "AT - Austria", "AU - Australia", "BE - Belgium", "CH - Schwitzerland", "CZ - Czech Republic", "DE - Germany", "DK - Denmark", "ES - Spain", "FI - Finland", "FR - France", "GB - Great Britain", "IS - Iceland", "IT - Italy", "NA - North America", "NL - Netherlands", "NO - Norway", "NZ - New Zealand", "RU - Russia", "SE - Sweden"],
             "metadata": {
-                "Description": "Microsoft Dynamics NAV Country version to deploy"
+                "Description": "Select Microsoft Dynamics NAV 2016 Country version to deploy"
             }
         },
         "vmAdminUsername": {
             "type": "string",
             "defaultValue": "vmadmin",
             "metadata": {
-                "Description": "Admin user name"
+                "Description": "Specify VM Admin user name"
             }
         },
         "vmAdminPassword": {
             "type": "securestring",
             "metadata": {
-                "Description": "Admin Password"
+                "Description": "Specify VM Admin Password"
             }
         },
         "multitenancy": {
@@ -36,14 +36,14 @@
             "defaultValue": "No",
             "allowedValues": ["Yes", "No"],
             "metadata": {
-                "Description": "Install Multi-tenancy"
+                "Description": "Multi-tenancy support?"
             }
         },
         "bingMapsKey": {
             "type": "string",
             "defaultValue": "No",
             "metadata": {
-                "Description": "Bing Maps Key (empty to skip Bing Maps Integration)"
+                "Description": "Bing Maps Key (enter No to skip Bing Maps Integration)"
             }
         },
         "clickonce": {
@@ -51,7 +51,7 @@
             "defaultValue": "Yes",
             "allowedValues": ["Yes", "No"],
             "metadata": {
-                "Description": "Install Clickonce Support"
+                "Description": "Install Clickonce Support?"
             }
         },
         "powerBI": {
@@ -59,21 +59,21 @@
             "defaultValue": "Yes",
             "allowedValues": ["Yes", "No"],
             "metadata": {
-                "Description": "Install PowerBI Demo"
+                "Description": "Install PowerBI Demo?"
             }
         },
         "Office365UserName": {
             "type": "string",
             "defaultValue": "No",
             "metadata": {
-                "Description": "Office 365 Administrator Email"
+                "Description": Enter Office 365 Administrator Email (enter No to skip O365 integration)"
             }
         },
         "Office365Password": {
             "type": "securestring",
             "defaultValue": "No",
             "metadata": {
-                "Description": "Office 365 Administrator Password"
+                "Description": "OEnter ffice 365 Administrator Password"
             }
         }
     },
