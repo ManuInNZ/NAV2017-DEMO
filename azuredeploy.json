@@ -37,14 +37,6 @@
                 "Description": "Specify VM Admin Password"
             }
         },
-        "multitenancy": {
-            "type": "string",
-            "defaultValue": "No",
-            "allowedValues": ["Yes", "No"],
-            "metadata": {
-                "Description": "Multi-tenancy support?"
-            }
-        },
         "bingMapsKey": {
             "type": "string",
             "defaultValue": "No",
@@ -230,7 +222,7 @@
                     "fileUris": [
                         "[concat(variables('ScriptFilePath'), 'initialize.ps1')]"
                     ],
-                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'),'initialize.ps1',' ',parameters('vmAdminUsername'),' ',parameters('vmAdminPassword'),' \"',parameters('country'),'\"',' ',reference(variables('publicIPAddressName')).dnsSettings.fqdn,' ',parameters('multitenancy'),' ',parameters('bingMapsKey'),' ',parameters('clickonce'),' ',parameters('powerBI'),' ',parameters('Office365UserName'),' ',parameters('Office365Password'))]"
+                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'),'initialize.ps1',' ',parameters('vmAdminUsername'),' ',parameters('vmAdminPassword'),' \"',parameters('country'),'\"',' ',reference(variables('publicIPAddressName')).dnsSettings.fqdn,' ',parameters('bingMapsKey'),' ',parameters('clickonce'),' ',parameters('powerBI'),' ',parameters('Office365UserName'),' ',parameters('Office365Password'))]"
                 },
                 "protectedSettings": {
                     "storageAccountName": "[variables('newStorageAccountName')]",
