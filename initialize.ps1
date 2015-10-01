@@ -6,7 +6,6 @@ param
       ,[string]$VMAdminPassword  = $null
       ,[string]$Country = $null
       ,[string]$PublicMachineName = $null
-      ,[string]$multitenancy = $null
       ,[string]$bingMapsKey = $null
       ,[string]$clickonce = $null
       ,[string]$powerBI = $null
@@ -75,7 +74,7 @@ if ($Office365UserName -ne "No") {
         ('$HardcodeSharePointLanguage = "default"')                                | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
         ('$HardcodeSharePointTimezoneId = "default"')                              | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
         ('$HardcodeSharePointAppCatalogUrl = "default"')                           | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
-        ('$HardcodeSharePointMultitenant = "' + $multitenancy + '"')               | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+        ('$HardcodeSharePointMultitenant = "No"')                                  | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
         . 'c:\DEMO\O365 Integration\install.ps1' 4> 'C:\DEMO\O365 Integration\install.log'
     } catch {
         Set-Content -Path "c:\DEMO\O365 Integration\error.txt" -Value $_.Exception.Message
@@ -84,26 +83,13 @@ if ($Office365UserName -ne "No") {
     }
 }
 
-if ($multitenancy -eq "Yes") {
-
+if ($clickonce -eq "Yes") {
     try {
-        . 'c:\DEMO\Multitenancy\install.ps1' 4> 'C:\DEMO\Multitenancy\install.log'
+        . 'c:\DEMO\Clickonce\install.ps1' 4> 'C:\DEMO\Clickonce\install.log'
     } catch {
-        Set-Content -Path "c:\DEMO\Multitenancy\error.txt" -Value $_.Exception.Message
+        Set-Content -Path "c:\DEMO\Clickonce\error.txt" -Value $_.Exception.Message
         Write-Verbose $_.Exception.Message
         $failure = $true
-    }
-
-} else {
-
-    if ($clickonce -eq "Yes") {
-        try {
-            . 'c:\DEMO\Clickonce\install.ps1' 4> 'C:\DEMO\Clickonce\install.log'
-        } catch {
-            Set-Content -Path "c:\DEMO\Clickonce\error.txt" -Value $_.Exception.Message
-            Write-Verbose $_.Exception.Message
-            $failure = $true
-        }
     }
 }
 
