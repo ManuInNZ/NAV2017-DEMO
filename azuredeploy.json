@@ -91,7 +91,6 @@
         "newStorageAccountName" : "[tolower(vmName)]",
         "dnsName" : "[tolower(vmName)]",
         "vmSize" : "Standard_D2",
-        "vmSourceImageName" : "9a03679de0e64e0e94fb8d7fd3c72ff1__Dynamics-NAV-2015-CU8-201506NB.01-127GB",
         "addressPrefix":"10.0.0.0/16",
         "subnet1Name" : "subnet1",
         "subnet1Prefix" : "10.0.0.0/24",
@@ -99,7 +98,6 @@
         "nicName" : "nic1",
         "ScriptCommandToExecute" : "powershell.exe -File  ",
         "ScriptFilePath" : "https://raw.githubusercontent.com/NAVDEMO/Demo/master/",
-        "sourceImageName": "[concat('/',subscription().subscriptionId,'/services/images/',variables('vmSourceImageName'))]",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
         "subnet1Ref": "[concat(variables('vnetID'),'/subnets/',variables('subnet1Name'))]",
         "accountid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/','Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]"
@@ -108,14 +106,14 @@
         {
             "type": "Microsoft.Storage/storageAccounts",
             "name": "[variables('newStorageAccountName')]",
-            "apiVersion": "2015-06-15",
+            "apiVersion": "2015-05-01-preview",
             "location": "[parameters('location')]",
             "properties": {
                 "accountType": "[variables('storageAccountType')]"
             }
         },
         {
-            "apiVersion": "2015-06-15",
+            "apiVersion": "2015-05-01-preview",
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "[variables('publicIPAddressName')]",
             "location": "[parameters('location')]",
@@ -127,7 +125,7 @@
             }
         },
         {
-            "apiVersion": "2015-06-15",
+            "apiVersion": "2015-05-01-preview",
             "type": "Microsoft.Network/virtualNetworks",
             "name": "[variables('virtualNetworkName')]",
             "location": "[parameters('location')]",
@@ -148,7 +146,7 @@
             }
         },
         {
-            "apiVersion": "2015-06-15",
+            "apiVersion": "2015-05-01-preview",
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[variables('nicName')]",
             "location": "[parameters('location')]",
@@ -200,9 +198,9 @@
                     },
                     "osDisk": {
                         "name": "osdisk",
-                        "vhd": {
-                        "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.windows.net/vhds/','osdisk.vhd')]"
-                        },
+                        "vhd": { 
+                            "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/',variables('OSDiskName'),'.vhd')]" 
+                        }, 
                         "caching": "ReadWrite",
                         "createOption": "FromImage"
                     }
