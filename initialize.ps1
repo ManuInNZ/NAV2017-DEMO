@@ -23,7 +23,7 @@ $NavAdminPassword = $VMAdminPassword
 $CloudServiceName = $PublicMachineName
 $MachineName = [Environment]::MachineName.ToLowerInvariant()
 
-$error = $false
+$failure = $false
 
 try {
     # Initialize Virtual Machine
@@ -51,7 +51,7 @@ if ($bingMapsKey -ne "No") {
     } catch {
         Set-Content -Path "c:\DEMO\BingMaps\error.txt" -Value $_.Exception.Message
         Write-Verbose $_.Exception.Message
-        $error = $true
+        $failure = $true
     }
 }
 
@@ -61,7 +61,7 @@ if ($powerBI -eq "Yes") {
     } catch {
         Set-Content -Path "c:\DEMO\PowerBI\error.txt" -Value $_.Exception.Message
         Write-Verbose $_.Exception.Message
-        $error = $true
+        $failure = $true
     }
 }
 
@@ -80,7 +80,7 @@ if ($Office365UserName -ne "No") {
     } catch {
         Set-Content -Path "c:\DEMO\O365 Integration\error.txt" -Value $_.Exception.Message
         Write-Verbose $_.Exception.Message
-        $error = $true
+        $failure = $true
     }
 }
 
@@ -91,7 +91,7 @@ if ($multitenancy -eq "Yes") {
     } catch {
         Set-Content -Path "c:\DEMO\Multitenancy\error.txt" -Value $_.Exception.Message
         Write-Verbose $_.Exception.Message
-        $error = $true
+        $failure = $true
     }
 
 } else {
@@ -102,11 +102,11 @@ if ($multitenancy -eq "Yes") {
         } catch {
             Set-Content -Path "c:\DEMO\Clickonce\error.txt" -Value $_.Exception.Message
             Write-Verbose $_.Exception.Message
-            $error = $true
+            $failure = $true
         }
     }
 }
 
-if ($error) {
+if ($failure) {
     throw "Error installing demo packages"
 }
