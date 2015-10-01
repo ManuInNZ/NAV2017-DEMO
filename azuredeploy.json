@@ -193,8 +193,8 @@
                 },
                 "storageProfile": {
                     "imageReference": {
-                        "publisher": “MicrosoftDynamicsNAV",
-                        "offer": “DynamicsNAV",
+                        "publisher": "MicrosoftDynamicsNAV",
+                        "offer": "DynamicsNAV",
                         "sku": "2016",
                         "version": "latest"
                     },
