@@ -84,22 +84,22 @@
         }
     },
     "variables": {
-        "pling" : "\"",
         "storageAccountType" : "Standard_LRS",
         "vmStorageAccountContainerName" : "vhds",
-        "publicIPAddressName" : "publicip1",
+        "publicIPAddressName" : "MyPublicIP",
         "newStorageAccountName" : "[tolower(parameters('vmName'))]",
         "dnsName" : "[tolower(parameters('vmName'))]",
+        "OSDiskName" : "[tolower(parameters('vmName'))]",
         "vmSize" : "Standard_D2",
         "addressPrefix":"10.0.0.0/16",
-        "subnet1Name" : "subnet1",
-        "subnet1Prefix" : "10.0.0.0/24",
-        "virtualNetworkName" : "vnet1",
-        "nicName" : "nic1",
+        "subnetName" : "subnet",
+        "subnetPrefix" : "10.0.0.0/24",
+        "virtualNetworkName" : "MyVNet",
+        "nicName" : "MyVMNic",
         "ScriptCommandToExecute" : "powershell.exe -File  ",
         "ScriptFilePath" : "https://raw.githubusercontent.com/NAVDEMO/Demo/master/",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
-        "subnet1Ref": "[concat(variables('vnetID'),'/subnets/',variables('subnet1Name'))]",
+        "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
         "accountid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/','Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]"
     },
     "resources": [
@@ -137,9 +137,9 @@
                 },
                 "subnets": [
                     {
-                        "name": "[variables('subnet1Name')]",
+                        "name": "[variables('subnetName')]",
                         "properties": {
-                            "addressPrefix": "[variables('subnet1Prefix')]"
+                            "addressPrefix": "[variables('subnetPrefix')]"
                         }
                     }
                 ]
@@ -164,7 +164,7 @@
                                 "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
                             },
                             "subnet": {
-                                "id": "[variables('subnet1Ref')]"
+                                "id": "[variables('subnetRef')]"
                             }
                         }
                     }
