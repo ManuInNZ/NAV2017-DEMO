@@ -192,8 +192,11 @@
                     "adminPassword": "[parameters('vmAdminPassword')]"
                 },
                 "storageProfile": {
-                    "sourceImage": {
-                        "id": "[variables('sourceImageName')]"
+                    "imageReference": {
+                        "publisher": “MicrosoftDynamicsNAV",
+                        "offer": “DynamicsNAV",
+                        "sku": "2016",
+                        "version": "latest"
                     },
                     "osDisk": {
                         "name": "osdisk",
