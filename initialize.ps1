@@ -17,17 +17,6 @@ param
 Set-ExecutionPolicy -ExecutionPolicy unrestricted -Force
 Start-Transcript -Path "C:\DEMO\initialize.txt"
 
-Set-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$VMAdminUsername   = ''' + $VMAdminUsername + '''')
-Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$VMAdminPassword   = ''' + $VMAdminPassword + '''')
-Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$Country           = ''' + $Country + '''')
-Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$PublicMachineName = ''' + $PublicMachineName + '''')
-Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$multitenancy      = ''' + $multitenancy + '''')
-Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$bingMapsKey       = ''' + $bingMapsKey + '''')
-Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$clickonce         = ''' + $clickonce + '''')
-Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$powerBI           = ''' + $powerBI + '''')
-Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$Office365UserName = ''' + $Office365UserName + '''')
-Add-Content -Path (Join-Path $PSScriptRoot "parameters.ps1") -Value ('$Office365Password = ''' + $Office365Password + '''')
-
 # Other variables
 $NavAdminUser = "admin"
 $NavAdminPassword = $VMAdminPassword
