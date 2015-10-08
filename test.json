@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "vmName": {
+        "name": {
             "type": "string",
             "metadata": {
                 "Description": "Select the name of the Microsoft Dynamics NAV 2016 deployment"
@@ -79,16 +79,16 @@
         "storageAccountType" : "Standard_LRS",
         "vmStorageAccountContainerName" : "vhds",
         "publicIPAddressName" : "PublicIP",
-        "newStorageAccountName" : "[tolower(parameters('vmName'))]",
-        "dnsName" : "[tolower(parameters('vmName'))]",
-        "OSDiskName" : "[tolower(parameters('vmName'))]",
+        "newStorageAccountName" : "[replace(tolower(parameters('name')),'-','')]",
+        "dnsName" : "[tolower(parameters('name'))]",
         "vmSize" : "Standard_D2",
         "addressPrefix":"10.0.0.0/16",
         "subnetName" : "Subnet",
         "subnetPrefix" : "10.0.0.0/24",
         "networkSecurityGroupName": "NetSecurity",
         "virtualNetworkName" : "VNet",
-        "nicName" : "Nic",
+        "server1Name" : "Server1",
+        "nic1Name" : "Nic1",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
         "accountid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/','Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
@@ -235,7 +235,7 @@
         {
             "apiVersion": "2015-05-01-preview",
             "type": "Microsoft.Network/networkInterfaces",
-            "name": "[variables('nicName')]",
+            "name": "[variables('nic1Name')]",
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
@@ -261,18 +261,18 @@
         {
             "apiVersion": "2015-06-15",
             "type": "Microsoft.Compute/virtualMachines",
-            "name": "[parameters('vmName')]",
+            "name": "[variables('server1Name')]",
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
-                "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
+                "[concat('Microsoft.Network/networkInterfaces/', variables('nic1Name'))]"
             ],
             "properties": {
                 "hardwareProfile": {
                     "vmSize": "[variables('vmSize')]"
                 },
                 "osProfile": {
-                    "computername": "[parameters('vmName')]",
+                    "computername": "[variables('server1Name')]",
                     "adminUsername": "[parameters('vmAdminUsername')]",
                     "adminPassword": "[parameters('vmAdminPassword')]",
                     "windowsConfiguration": {
@@ -289,7 +289,7 @@
                     "osDisk": {
                         "name": "osdisk",
                         "vhd": { 
-                            "uri": "[concat('http://',variables('newStorageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/',variables('OSDiskName'),'.vhd')]" 
+                            "uri": "[concat('http://',variables('newStorageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/',variables('server1Name'),'.vhd')]" 
                         }, 
                         "caching": "ReadWrite",
                         "createOption": "FromImage"
@@ -298,7 +298,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nic1Name'))]"
                         }
                     ]
                 }
@@ -307,10 +307,10 @@
         {
             "apiVersion": "2015-06-15",
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('vmName'),'/vmextension1')]",
+            "name": "[concat(variables('server1Name'),'/vmextension1')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
+                "[concat('Microsoft.Compute/virtualMachines/', variables('server1Name'))]"
             ],
             "properties": {
                 "publisher": "Microsoft.Compute",
