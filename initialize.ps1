@@ -16,6 +16,10 @@ param
 Set-ExecutionPolicy -ExecutionPolicy unrestricted -Force
 Start-Transcript -Path "C:\DEMO\initialize.txt"
 
+# Wait until NAV Service Tier is Running
+. ("c:\program files\Microsoft Dynamics NAV\90\Service\NavAdminTool.ps1")
+while ((Get-NAVServerInstance -ServerInstance NAV).State -ne "Running") { Start-Sleep -Seconds 5 }
+
 # Other variables
 $NavAdminUser = "admin"
 $NavAdminPassword = $VMAdminPassword
