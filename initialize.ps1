@@ -46,6 +46,26 @@ try {
 Set-Content -Path "c:\inetpub\wwwroot\http\$MachineName.rdp" -Value ('full address:s:' + $PublicMachineName + ':3389
 prompt for credentials:i:1')
 
+if ($Office365UserName -ne "No") {
+    try {
+        ('$HardcodeNavAdminUser = "default"')                                      | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+        ('$HardcodeSharePointAdminLoginname = "'+$Office365UserName + '"')         | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+        ('$HardcodeSharePointAdminPassword = "'+$Office365Password + '"')          | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+        ('$HardcodeCreateSharePointPortal = "default"')                            | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+        ('$HardcodeSharePointUrl = "default"')                                     | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+        ('$HardcodeSharePointSite = "' + ($PublicMachineName.Split('.')[0]) + '"') | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+        ('$HardcodeSharePointLanguage = "default"')                                | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+        ('$HardcodeSharePointTimezoneId = "default"')                              | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+        ('$HardcodeSharePointAppCatalogUrl = "default"')                           | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+        ('$HardcodeSharePointMultitenant = "No"')                                  | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
+        . 'c:\DEMO\O365 Integration\install.ps1' 4> 'C:\DEMO\O365 Integration\install.log'
+    } catch {
+        Set-Content -Path "c:\DEMO\O365 Integration\error.txt" -Value $_.Exception.Message
+        Write-Verbose $_.Exception.Message
+        $failure = $true
+    }
+}
+
 if ($bingMapsKey -ne "No") {
     try {
         ('$HardcodeBingMapsKey = "'+$bingMapsKey+'"') | Add-Content "c:\DEMO\BingMaps\HardcodeInput.ps1"
@@ -63,25 +83,6 @@ if ($powerBI -eq "Yes") {
         . 'c:\DEMO\PowerBI\install.ps1' 4> 'C:\DEMO\PowerBI\install.log'
     } catch {
         Set-Content -Path "c:\DEMO\PowerBI\error.txt" -Value $_.Exception.Message
-        Write-Verbose $_.Exception.Message
-        $failure = $true
-    }
-}
-
-if ($Office365UserName -ne "No") {
-    try {
-        ('$HardcodeNavAdminUser = "default"')                                      | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
-        ('$HardcodeSharePointAdminLoginname = "'+$Office365UserName + '"')         | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
-        ('$HardcodeSharePointAdminPassword = "'+$Office365Password + '"')          | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
-        ('$HardcodeSharePointUrl = "default"')                                     | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
-        ('$HardcodeSharePointSite = "' + ($PublicMachineName.Split('.')[0]) + '"') | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
-        ('$HardcodeSharePointLanguage = "default"')                                | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
-        ('$HardcodeSharePointTimezoneId = "default"')                              | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
-        ('$HardcodeSharePointAppCatalogUrl = "default"')                           | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
-        ('$HardcodeSharePointMultitenant = "No"')                                  | Add-Content "c:\DEMO\O365 Integration\HardcodeInput.ps1"
-        . 'c:\DEMO\O365 Integration\install.ps1' 4> 'C:\DEMO\O365 Integration\install.log'
-    } catch {
-        Set-Content -Path "c:\DEMO\O365 Integration\error.txt" -Value $_.Exception.Message
         Write-Verbose $_.Exception.Message
         $failure = $true
     }
