@@ -32,13 +32,13 @@ $failure = $false
 
 try {
     # Initialize Virtual Machine
-    ('$HardcodeLanguage = "'+$Country.Substring(0,2)+'"')          | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
-    ('$HardcodeNavAdminUser = "'+$NAVAdminUser+'"')                | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
-    ('$HardcodeNavAdminPassword = "'+$NAVAdminPassword+'"')        | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
-    ('$HardcodeRestoreAndUseBakFile = "'+$RestoreAndUseBakFile'"') | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
-    ('$HardcodeCloudServiceName = "'+$CloudServiceName+'"')        | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
-    ('$HardcodePublicMachineName = "'+$PublicMachineName+'"')      | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
-    ('$HardcodecertificatePfxFile = "default"')                    | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
+    ('$HardcodeLanguage = "'+$Country.Substring(0,2)+'"')           | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
+    ('$HardcodeNavAdminUser = "'+$NAVAdminUser+'"')                 | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
+    ('$HardcodeNavAdminPassword = "'+$NAVAdminPassword+'"')         | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
+    ('$HardcodeRestoreAndUseBakFile = "'+$RestoreAndUseBakFile+'"') | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
+    ('$HardcodeCloudServiceName = "'+$CloudServiceName+'"')         | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
+    ('$HardcodePublicMachineName = "'+$PublicMachineName+'"')       | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
+    ('$HardcodecertificatePfxFile = "default"')                     | Add-Content "c:\DEMO\Initialize\HardcodeInput.ps1"
     . 'c:\DEMO\Initialize\install.ps1' 4> 'C:\DEMO\Initialize\install.log'
 } catch {
     Set-Content -Path "c:\DEMO\initialize\error.txt" -Value $_.Exception.Message
