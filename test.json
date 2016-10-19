@@ -10,8 +10,8 @@
         },
         "location": {
             "type": "string",
-            "defaultValue": "West Europe",
-            "allowedValues": ["West US", "East US", "North Central US", "North Europe", "West Europe", "East Asia", "Southeast Asia"],
+             "defaultValue": "Australia Southeast",
+            "allowedValues": ["East US","East US 2","West US","Central US","North Central US","South Central US","North Europe","West Europe","East Asia","Southeast Asia","Japan East","Japan West","Australia East","Australia Southeast","Brazil South","Canada Central","Canada East","West US 2","West Central US","UK South","UK West"],
             "metadata": {
                 "Description": "Select Location in which to deploy Microsoft Dynamics NAV 2016"
             }
@@ -31,7 +31,7 @@
         },
         "country": {
             "type": "string",
-            "defaultValue": "W1 - International",
+            "defaultValue": "NZ - New Zealand",
             "allowedValues": ["W1 - International", "AT - Austria", "AU - Australia", "BE - Belgium", "CH - Schwitzerland", "CZ - Czech Republic", "DE - Germany", "DK - Denmark", "ES - Spain", "FI - Finland", "FR - France", "GB - Great Britain", "IS - Iceland", "IT - Italy", "NA - North America", "NL - Netherlands", "NO - Norway", "NZ - New Zealand", "RU - Russia", "SE - Sweden"],
             "metadata": {
                 "Description": "Select Microsoft Dynamics NAV 2016 Country version to deploy"

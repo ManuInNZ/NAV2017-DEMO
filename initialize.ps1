@@ -13,6 +13,7 @@ param
       ,[string]$Office365UserName = $null
       ,[string]$Office365Password = $null
       ,[string]$Office365CreatePortal = "Yes"
+      ,[string]$azuresql = $null
 )
 
 Set-ExecutionPolicy -ExecutionPolicy unrestricted -Force
@@ -96,6 +97,19 @@ if ($clickonce -eq "Yes") {
         . 'c:\DEMO\Clickonce\install.ps1' 4> 'C:\DEMO\Clickonce\install.log'
     } catch {
         Set-Content -Path "c:\DEMO\Clickonce\error.txt" -Value $_.Exception.Message
+        Write-Verbose $_.Exception.Message
+        $failure = $true
+    }
+}
+
+if ($azuresql -eq "Yes") {
+    try {
+        ('$HardcodeNavAdminUser = "default"')                                    | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
+        ('$HardcodeSharePointAdminLoginname = "'+$Office365UserName+'"')         | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
+        ('$HardcodeSharePointAdminPassword = "'+$Office365Password+'"')          | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
+        . 'c:\DEMO\AzureSQL\install.ps1' 4> 'C:\DEMO\AzureSQL\install.log'
+    } catch {
+        Set-Content -Path "c:\DEMO\AzureSQL\error.txt" -Value $_.Exception.Message
         Write-Verbose $_.Exception.Message
         $failure = $true
     }

@@ -31,7 +31,7 @@
         },
         "country": {
             "type": "string",
-            "defaultValue": "W1 - International",
+            "defaultValue": "NZ - New Zealand",
             "allowedValues": ["W1 - International", "AT - Austria", "AU - Australia", "BE - Belgium", "CH - Schwitzerland", "CZ - Czech Republic", "DE - Germany", "DK - Denmark", "ES - Spain", "FI - Finland", "FR - France", "GB - Great Britain", "IS - Iceland", "IT - Italy", "NA - North America", "NL - Netherlands", "NO - Norway", "NZ - New Zealand", "RU - Russia", "SE - Sweden"],
             "metadata": {
                 "Description": "Select Microsoft Dynamics NAV 2016 Country version to deploy"
@@ -72,6 +72,14 @@
             "defaultValue": "No",
             "metadata": {
                 "Description": "Enter Office 365 Administrator Password"
+            }
+        },
+        "azuresql": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "allowedValues": ["Yes", "No"],
+            "metadata": {
+                "Description": "Use Azure SQL Database?"
             }
         }
     },
@@ -320,7 +328,7 @@
                     "fileUris": [
                         "[concat(variables('ScriptFilePath'), 'initialize.ps1')]"
                     ],
-                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'),'initialize.ps1',' -VMAdminUsername ',parameters('vmAdminUsername'),' -VMAdminPassword ',parameters('vmAdminPassword'),' -Country \"',parameters('country'),'\" -PublicMachineName ',reference(variables('publicIPAddressName')).dnsSettings.fqdn,' -bingMapsKey ',parameters('bingMapsKey'),' -ClickOnce ',parameters('clickonce'),' -PowerBI ',parameters('powerBI'),' -Office365UserName ',parameters('Office365UserName'),' -Office365Password ',parameters('Office365Password'))]"
+                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'),'initialize.ps1',' -VMAdminUsername ',parameters('vmAdminUsername'),' -VMAdminPassword ',parameters('vmAdminPassword'),' -Country \"',parameters('country'),'\" -PublicMachineName ',reference(variables('publicIPAddressName')).dnsSettings.fqdn,' -bingMapsKey ',parameters('bingMapsKey'),' -ClickOnce ',parameters('clickonce'),' -PowerBI ',parameters('powerBI'),' -Office365UserName ',parameters('Office365UserName'),' -Office365Password ',parameters('Office365Password'),' -UseAzureSQL ',parameters('azuresql'))]"
                 },
                 "protectedSettings": {
                     "storageAccountName": "[variables('newStorageAccountName')]",
