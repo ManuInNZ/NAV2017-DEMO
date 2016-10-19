@@ -104,9 +104,7 @@ if ($clickonce -eq "Yes") {
 
 if ($azuresql -eq "Yes") {
     try {
-        ('$HardcodeNavAdminUser = "default"')                                    | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
-        ('$HardcodeSharePointAdminLoginname = "'+$Office365UserName+'"')         | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
-        ('$HardcodeSharePointAdminPassword = "'+$Office365Password+'"')          | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
+        ('$HardcodeDatabasePassword = "'+$NAVAdminPassword+'"')         | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
         . 'c:\DEMO\AzureSQL\install.ps1' 4> 'C:\DEMO\AzureSQL\install.log'
     } catch {
         Set-Content -Path "c:\DEMO\AzureSQL\error.txt" -Value $_.Exception.Message
