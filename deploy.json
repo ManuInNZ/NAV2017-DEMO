@@ -95,13 +95,13 @@
         "subnetPrefix" : "10.0.0.0/24",
         "networkSecurityGroupName": "NetSecurity",
         "virtualNetworkName" : "VNet",
-        "server1Name" : "Server1",
+        "server1Name" : "AppServer1",
         "nic1Name" : "Nic1",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
         "accountid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/','Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
         "ScriptCommandToExecute" : "powershell.exe -File  ",
-        "ScriptFilePath" : "https://raw.githubusercontent.com/NAVDEMO/Demo/master/"		
+        "ScriptFilePath" : "https://raw.githubusercontent.com/ManuInNZ/Demo/master/"		
     },
     "resources": [
         {
