@@ -10,8 +10,8 @@
         },
         "location": {
             "type": "string",
-            "defaultValue": "West Europe",
-            "allowedValues": ["West US", "East US", "North Central US", "North Europe", "West Europe", "East Asia", "Southeast Asia"],
+            "defaultValue": "Australia Southeast",
+            "allowedValues": ["East US","East US 2","West US","Central US","North Central US","South Central US","North Europe","West Europe","East Asia","Southeast Asia","Japan East","Japan West","Australia East","Australia Southeast","Brazil South","Canada Central","Canada East","West US 2","West Central US","UK South","UK West"],
             "metadata": {
                 "Description": "Select Location in which to deploy Microsoft Dynamics NAV 2016"
             }
