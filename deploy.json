@@ -80,7 +80,7 @@
             "allowedValues": ["Yes", "No"],
             "metadata": {
                 "Description": "Use Azure SQL Database?"
-            },
+            }
         },
         "ExistingAzureSqlDatabase": {
             "type": "string",
@@ -88,7 +88,7 @@
             "allowedValues": ["Yes", "No"],
             "metadata": {
                 "Description": "Use an Existing Azure SQL Database? (with NAV licence)"
-            },
+            }
         },
         "sqlDBsrvName": {
             "type": "string",
@@ -102,21 +102,21 @@
             "defaultValue": "Yes",
             "metadata": {
                 "Description": "Admin account of Azure SQL Database Server? (Existing or not)"
-            },
+            }
         },
         "sqlAdminLoginPassword": {
             "type": "securestring",
             "defaultValue": "Yes",
             "metadata": {
                 "Description": "Password for Admin of Azure SQL Database Server? (Existing or not)"
-            },
+            }
         },
         "sqlDBname": {
             "type": "string",
             "defaultValue": "Yes",
             "metadata": {
                 "Description": "Name of Azure SQL Database Server? (Existing or not)"
-            },
+            }
         },
         "AzureDBCollation":{
             "type": "string",
