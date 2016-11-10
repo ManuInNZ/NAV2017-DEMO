@@ -342,7 +342,7 @@
                         "[resourceId('Microsoft.Sql/servers', parameters('sqlDBsrvName'))]"
                     ],
                     "tags": {
-                        "displayName": "ThetaNAVDB"
+                        "displayName": "NAVDB"
                     },
                     "properties": {
                         "collation": "[parameters('AzureDBCollation')]",
