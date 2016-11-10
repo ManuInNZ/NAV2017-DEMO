@@ -5,7 +5,7 @@
         "name": {
             "type": "string",
             "metadata": {
-                "Description": "Select the name of the Microsoft Dynamics NAV 2016 deployment"
+                "Description": "Select the name of the Microsoft Dynamics NAV 2017 deployment"
             }
         },
         "location": {
@@ -13,7 +13,7 @@
             "defaultValue": "Australia Southeast",
             "allowedValues": ["East US","East US 2","West US","Central US","North Central US","South Central US","North Europe","West Europe","East Asia","Southeast Asia","Japan East","Japan West","Australia East","Australia Southeast","Brazil South","Canada Central","Canada East","West US 2","West Central US","UK South","UK West"],
             "metadata": {
-                "Description": "Select Location in which to deploy Microsoft Dynamics NAV 2016"
+                "Description": "Select Location in which to deploy Microsoft Dynamics NAV 2017"
             }
         },
         "vmAdminUsername": {
@@ -34,7 +34,7 @@
             "defaultValue": "NZ - New Zealand",
             "allowedValues": ["W1 - International", "AT - Austria", "AU - Australia", "BE - Belgium", "CH - Schwitzerland", "CZ - Czech Republic", "DE - Germany", "DK - Denmark", "ES - Spain", "FI - Finland", "FR - France", "GB - Great Britain", "IS - Iceland", "IT - Italy", "NA - North America", "NL - Netherlands", "NO - Norway", "NZ - New Zealand", "RU - Russia", "SE - Sweden"],
             "metadata": {
-                "Description": "Select Microsoft Dynamics NAV 2016 Country version to deploy"
+                "Description": "Select Microsoft Dynamics NAV 2017 Country version to deploy"
             }
         },
         "bingMapsKey": {
@@ -54,7 +54,7 @@
         },
         "powerBI": {
             "type": "string",
-            "defaultValue": "Yes",
+            "defaultValue": "No",
             "allowedValues": ["Yes", "No"],
             "metadata": {
                 "Description": "Install PowerBI Demo?"
@@ -74,13 +74,54 @@
                 "Description": "Enter Office 365 Administrator Password"
             }
         },
-        "azuresql": {
+        "AzureSQL": {
             "type": "string",
             "defaultValue": "Yes",
             "allowedValues": ["Yes", "No"],
             "metadata": {
                 "Description": "Use Azure SQL Database?"
-            }
+            },
+        },
+        "ExistingAzureSqlDatabase": {
+            "type": "string",
+            "defaultValue": "No",
+            "allowedValues": ["Yes", "No"],
+            "metadata": {
+                "Description": "Use an Existing Azure SQL Database? (with NAV licence)"
+            },
+        },
+        "sqlDBsrvName": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "metadata": {
+                "Description": "Name of Existing Azure SQL Database Server?"
+            },
+        },
+        "sqlAdminLoginName": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "metadata": {
+                "Description": "Admin account of Azure SQL Database Server? (Existing or not)"
+            },
+        },
+        "sqlAdminLoginPassword": {
+            "type": "securestring",
+            "defaultValue": "Yes",
+            "metadata": {
+                "Description": "Password for Admin of Azure SQL Database Server? (Existing or not)"
+            },
+        },
+        "sqlDBname": {
+            "type": "string",
+            "defaultValue": "Yes",
+            "metadata": {
+                "Description": "Name of Azure SQL Database Server? (Existing or not)"
+            },
+        },
+        "AzureDBCollation":{
+            "type": "string",
+            "minLength": 1,
+            "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
         }
     },
     "variables": {
@@ -95,13 +136,15 @@
         "subnetPrefix" : "10.0.0.0/24",
         "networkSecurityGroupName": "NetSecurity",
         "virtualNetworkName" : "VNet",
-        "server1Name" : "AppServer1",
+        "server1Name" : "[tolower(parameters('name'))]",
         "nic1Name" : "Nic1",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
         "accountid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name,'/providers/','Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
+        "DBEdition": "Standard",
+        "DBRequestedServiceObjectiveName": "S0",
         "ScriptCommandToExecute" : "powershell.exe -File  ",
-        "ScriptFilePath" : "https://raw.githubusercontent.com/ManuInNZ/Demo/master/"		
+        "ScriptFilePath" : "https://raw.githubusercontent.com/ManuInNZ/NAV2017-DEMO/master/"		
     },
     "resources": [
         {
@@ -267,13 +310,57 @@
             }
         },
         {
+            "name": "[parameters('sqlDBsrvName')]",
+            "type": "Microsoft.Sql/servers",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2014-04-01-preview",
+            "dependsOn": [ ],
+            "properties": {
+                "administratorLogin": "[parameters('sqlAdminLoginName')]",
+                "administratorLoginPassword": "[parameters('sqlAdminLoginPassword')]"
+            },
+            "resources": [
+                {
+                    "name": "AllowAllWindowsAzureIps",
+                    "type": "firewallrules",
+                    "location": "[resourceGroup().location]",
+                    "apiVersion": "2014-04-01-preview",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Sql/servers', parameters('sqlDBsrvName'))]"
+                    ],
+                    "properties": {
+                        "startIpAddress": "0.0.0.0",
+                        "endIpAddress": "0.0.0.0"
+                    }
+                },
+                {
+                    "name": "[parameters('sqlDBname')]",
+                    "type": "databases",
+                    "location": "[resourceGroup().location]",
+                    "apiVersion": "2014-04-01-preview",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Sql/servers', parameters('sqlDBsrvName'))]"
+                    ],
+                    "tags": {
+                        "displayName": "ThetaNAVDB"
+                    },
+                    "properties": {
+                        "collation": "[parameters('AzureDBCollation')]",
+                        "edition": "[variables('DBEdition')]",
+                        "maxSizeBytes": "1073741824",
+                        "requestedServiceObjectiveName": "[variables('DBRequestedServiceObjectiveName')]"
+                    }
+                }
+            ]
+        }
+        {
             "apiVersion": "2015-06-15",
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[variables('server1Name')]",
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
-                "[concat('Microsoft.Network/networkInterfaces/', variables('nic1Name'))]"
+                "[concat('Microsoft.Network/networkInterfaces/', variables('nic1Name'))]","[concat('Microsoft.Sql/servers', parameters('sqlDBsrvName'))]"
             ],
             "properties": {
                 "hardwareProfile": {
@@ -291,7 +378,7 @@
                     "imageReference": {
                         "publisher": "MicrosoftDynamicsNAV",
                         "offer": "DynamicsNAV",
-                        "sku": "2016",
+                        "sku": "2017",
                         "version": "latest"
                     },
                     "osDisk": {
@@ -328,7 +415,7 @@
                     "fileUris": [
                         "[concat(variables('ScriptFilePath'), 'initialize.ps1')]"
                     ],
-                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'),'initialize.ps1',' -VMAdminUsername ',parameters('vmAdminUsername'),' -VMAdminPassword ',parameters('vmAdminPassword'),' -Country \"',parameters('country'),'\" -PublicMachineName ',reference(variables('publicIPAddressName')).dnsSettings.fqdn,' -bingMapsKey ',parameters('bingMapsKey'),' -ClickOnce ',parameters('clickonce'),' -PowerBI ',parameters('powerBI'),' -Office365UserName ',parameters('Office365UserName'),' -Office365Password ',parameters('Office365Password'),' -UseAzureSQL ',parameters('azuresql'))]"
+                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'),'initialize.ps1',' -VMAdminUsername ',parameters('vmAdminUsername'),' -VMAdminPassword ',parameters('vmAdminPassword'),' -Country \"',parameters('country'),'\" -PublicMachineName ',reference(variables('publicIPAddressName')).dnsSettings.fqdn,' -bingMapsKey ',parameters('bingMapsKey'),' -ClickOnce ',parameters('clickonce'),' -PowerBI ',parameters('powerBI'),' -Office365UserName ',parameters('Office365UserName'),' -Office365Password ',parameters('Office365Password'),' -AzureSQL ',parameters('AzureSQL'), ' -sqlDBsrvName ',parameters('sqlDBsrvName'),' -sqlAdminLoginName ',parameters('sqlAdminLoginName'),' -sqlAdminLoginPassword ',parameters('sqlAdminLoginPassword'), ' -sqlDBname ',parameters('sqlDBname'), ' -ExistingAzureSqlDatabase ', parameters('ExistingAzureSqlDatabase'))]"
                 },
                 "protectedSettings": {
                     "storageAccountName": "[variables('newStorageAccountName')]",
@@ -338,4 +425,3 @@
         }
     ]
 }
-

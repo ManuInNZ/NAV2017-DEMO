@@ -13,7 +13,12 @@ param
       ,[string]$Office365UserName = $null
       ,[string]$Office365Password = $null
       ,[string]$Office365CreatePortal = "Yes"
-      ,[string]$azuresql = $null
+      ,[string]$AzureSQL = $null
+      ,[string]$ExistingAzureSqlDatabase = $null
+      ,[string]$sqlDBsrvName = $null
+      ,[string]$sqlAdminLoginName = $null
+      ,[string]$sqlAdminLoginPassword = $null
+      ,[string]$sqlDBname = $null
 )
 
 Set-ExecutionPolicy -ExecutionPolicy unrestricted -Force
@@ -102,9 +107,20 @@ if ($clickonce -eq "Yes") {
     }
 }
 
-if ($azuresql -eq "Yes") {
+if ($AzureSQL -eq "Yes") {
     try {
-        ('$HardcodeDatabasePassword = "'+$NAVAdminPassword+'"')         | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
+        # DatabaseServer
+        # DatabaseUserName
+        # DatabaseName
+        # StorageAccountName
+        # StorageAccountKey
+        # StorageAccountLocation
+        # ExistingAzureSqlDatabase
+        ('$HardcodeDatabaseServer = "'+$sqlDBsrvName+'"')                       | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
+        ('$HardcodeDatabaseUserName = "'+$sqlAdminLoginName+'"')                | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
+        ('$HardcodeDatabaseName = "'+$sqlDBname+'"')                            | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
+        ('$HardcodeExistingAzureSqlDatabase = "'+$ExistingAzureSqlDatabase+'"') | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
+        ('$HardcodeDatabasePassword = "'+$sqlAdminLoginPassword+'"')            | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
         . 'c:\DEMO\AzureSQL\install.ps1' 4> 'C:\DEMO\AzureSQL\install.log'
     } catch {
         Set-Content -Path "c:\DEMO\AzureSQL\error.txt" -Value $_.Exception.Message
