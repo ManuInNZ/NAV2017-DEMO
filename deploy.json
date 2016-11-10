@@ -95,7 +95,7 @@
             "defaultValue": "Yes",
             "metadata": {
                 "Description": "Name of Existing Azure SQL Database Server?"
-            },
+            }
         },
         "sqlAdminLoginName": {
             "type": "string",
