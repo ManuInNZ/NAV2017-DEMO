@@ -310,7 +310,7 @@
             }
         },
         {
-            "name": "[parameters('sqlDBsrvName')]",
+            "name": "[tolower(parameters('sqlDBsrvName')]",
             "type": "Microsoft.Sql/servers",
             "location": "[resourceGroup().location]",
             "apiVersion": "2014-04-01-preview",
