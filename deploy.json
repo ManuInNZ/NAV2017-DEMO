@@ -92,28 +92,28 @@
         },
         "sqlDBsrvName": {
             "type": "string",
-            "defaultValue": "Yes",
+            "defaultValue": "SQLSrvr",
             "metadata": {
                 "Description": "Name of Existing Azure SQL Database Server?"
             }
         },
         "sqlAdminLoginName": {
             "type": "string",
-            "defaultValue": "Yes",
+            "defaultValue": "sqladmin",
             "metadata": {
                 "Description": "Admin account of Azure SQL Database Server? (Existing or not)"
             }
         },
         "sqlAdminLoginPassword": {
             "type": "securestring",
-            "defaultValue": "Yes",
+            "defaultValue": "P@ssword12345!",
             "metadata": {
                 "Description": "Password for Admin of Azure SQL Database Server? (Existing or not)"
             }
         },
         "sqlDBname": {
             "type": "string",
-            "defaultValue": "Yes",
+            "defaultValue": "NAVDB",
             "metadata": {
                 "Description": "Name of Azure SQL Database Server? (Existing or not)"
             }
