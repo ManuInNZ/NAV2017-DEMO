@@ -70,13 +70,14 @@
         },
         "Office365Password": {
             "type": "securestring",
+            "defaultValue": "P@ssword12345!",
             "metadata": {
                 "Description": "Enter Office 365 Administrator Password"
             }
         },
         "AzureSQL": {
             "type": "string",
-            "defaultValue": "Yes",
+            "defaultValue": "No",
             "allowedValues": ["Yes", "No"],
             "metadata": {
                 "Description": "Use Azure SQL Database?"
