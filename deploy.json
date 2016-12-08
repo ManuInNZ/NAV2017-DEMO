@@ -25,6 +25,7 @@
         },
         "vmAdminPassword": {
             "type": "securestring",
+            "defaultValue": "P@ssword12345!",
             "metadata": {
                 "Description": "Specify VM Admin Password"
             }
@@ -69,7 +70,6 @@
         },
         "Office365Password": {
             "type": "securestring",
-            "defaultValue": "No",
             "metadata": {
                 "Description": "Enter Office 365 Administrator Password"
             }
@@ -90,7 +90,7 @@
                 "Description": "Use an Existing Azure SQL Database? (with NAV licence)"
             }
         },
-        "sqlDBsrvName": {
+        "sqlDBSrvName": {
             "type": "string",
             "defaultValue": "SQLSrvr",
             "metadata": {
@@ -111,7 +111,7 @@
                 "Description": "Password for Admin of Azure SQL Database Server? (Existing or not)"
             }
         },
-        "sqlDBname": {
+        "sqlDBName": {
             "type": "string",
             "defaultValue": "NAVDB",
             "metadata": {
@@ -127,15 +127,15 @@
     "variables": {
         "storageAccountType" : "Standard_LRS",
         "vmStorageAccountContainerName" : "vhds",
-        "publicIPAddressName" : "PublicIP",
+        "publicIPAddressName" : "NAVPublicIP",
         "newStorageAccountName" : "[replace(tolower(parameters('name')),'-','')]",
         "dnsName" : "[tolower(parameters('name'))]",
-        "vmSize" : "Standard_D2",
+        "vmSize" : "Standard_D2_v2",
         "addressPrefix":"10.0.0.0/16",
-        "subnetName" : "Subnet",
+        "subnetName" : "NAVSubnet",
         "subnetPrefix" : "10.0.0.0/24",
-        "networkSecurityGroupName": "NetSecurity",
-        "virtualNetworkName" : "VNet",
+        "networkSecurityGroupName": "NAVNetSecurity",
+        "virtualNetworkName" : "NAVVNet",
         "server1Name" : "[tolower(parameters('name'))]",
         "nic1Name" : "Nic1",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
@@ -310,7 +310,7 @@
             }
         },
         {
-            "name": "[tolower(parameters('sqlDBsrvName'))]", 
+            "name": "[tolower(parameters('sqlDBSrvName'))]", 
             "type": "Microsoft.Sql/servers",
             "location": "[resourceGroup().location]",
             "apiVersion": "2014-04-01-preview",
@@ -326,7 +326,7 @@
                     "location": "[resourceGroup().location]",
                     "apiVersion": "2014-04-01-preview",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Sql/servers', parameters('sqlDBsrvName'))]"
+                        "[resourceId('Microsoft.Sql/servers', parameters('sqlDBSrvName'))]"
                     ],
                     "properties": {
                         "startIpAddress": "0.0.0.0",
@@ -334,12 +334,12 @@
                     }
                 },
                 {
-                    "name": "[parameters('sqlDBname')]",
+                    "name": "[parameters('sqlDBName')]",
                     "type": "databases",
                     "location": "[resourceGroup().location]",
                     "apiVersion": "2014-04-01-preview",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Sql/servers', parameters('sqlDBsrvName'))]"
+                        "[resourceId('Microsoft.Sql/servers', parameters('sqlDBSrvName'))]"
                     ],
                     "tags": {
                         "displayName": "NAVDB"
@@ -361,7 +361,7 @@
             "dependsOn": [
                 "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]",
                 "[concat('Microsoft.Network/networkInterfaces/', variables('nic1Name'))]", 
-                "[concat('Microsoft.Sql/servers/', parameters('sqlDBsrvName'))]"
+                "[concat('Microsoft.Sql/servers/', parameters('sqlDBSrvName'))]"
             ],
             "properties": {
                 "hardwareProfile": {
@@ -385,7 +385,7 @@
                     "osDisk": {
                         "name": "osdisk",
                         "vhd": { 
-                            "uri": "[concat('http://',variables('newStorageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/',variables('server1Name'),'.vhd')]" 
+                            "uri": "[concat('http://',variables('newStorageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/',variables('server1Name'),'OS.vhd')]" 
                         }, 
                         "caching": "ReadWrite",
                         "createOption": "FromImage"
@@ -416,7 +416,7 @@
                     "fileUris": [
                         "[concat(variables('ScriptFilePath'), 'initialize.ps1')]"
                     ],
-                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'),'initialize.ps1',' -VMAdminUsername ',parameters('vmAdminUsername'),' -VMAdminPassword ',parameters('vmAdminPassword'),' -Country \"',parameters('country'),'\" -PublicMachineName ',reference(variables('publicIPAddressName')).dnsSettings.fqdn,' -bingMapsKey ',parameters('bingMapsKey'),' -ClickOnce ',parameters('clickonce'),' -PowerBI ',parameters('powerBI'),' -Office365UserName ',parameters('Office365UserName'),' -Office365Password ',parameters('Office365Password'),' -AzureSQL ',parameters('AzureSQL'), ' -sqlDBsrvName ',parameters('sqlDBsrvName'),' -sqlAdminLoginName ',parameters('sqlAdminLoginName'),' -sqlAdminLoginPassword ',parameters('sqlAdminLoginPassword'), ' -sqlDBname ',parameters('sqlDBname'), ' -ExistingAzureSqlDatabase ', parameters('ExistingAzureSqlDatabase'))]"
+                    "commandToExecute": "[concat(variables('ScriptCommandToExecute'),'initialize.ps1',' -VMAdminUsername ',parameters('vmAdminUsername'),' -VMAdminPassword ',parameters('vmAdminPassword'),' -Country \"',parameters('country'),'\" -PublicMachineName ',reference(variables('publicIPAddressName')).dnsSettings.fqdn,' -bingMapsKey ',parameters('bingMapsKey'),' -ClickOnce ',parameters('clickonce'),' -PowerBI ',parameters('powerBI'),' -Office365UserName ',parameters('Office365UserName'),' -Office365Password ',parameters('Office365Password'),' -AzureSQL ',parameters('AzureSQL'), ' -sqlDBSrvName ',parameters('sqlDBSrvName'),' -sqlAdminLoginName ',parameters('sqlAdminLoginName'),' -sqlAdminLoginPassword ',parameters('sqlAdminLoginPassword'), ' -sqlDBName ',parameters('sqlDBName'), ' -ExistingAzureSqlDatabase ', parameters('ExistingAzureSqlDatabase'))]"
                 },
                 "protectedSettings": {
                     "storageAccountName": "[variables('newStorageAccountName')]",
