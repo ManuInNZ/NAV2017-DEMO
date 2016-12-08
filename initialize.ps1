@@ -15,10 +15,10 @@ param
       ,[string]$Office365CreatePortal = "Yes"
       ,[string]$AzureSQL = $null
       ,[string]$ExistingAzureSqlDatabase = $null
-      ,[string]$sqlDBsrvName = $null
+      ,[string]$sqlDBSrvName = $null
       ,[string]$sqlAdminLoginName = $null
       ,[string]$sqlAdminLoginPassword = $null
-      ,[string]$sqlDBname = $null
+      ,[string]$sqlDBName = $null
 )
 
 Set-ExecutionPolicy -ExecutionPolicy unrestricted -Force
@@ -116,9 +116,9 @@ if ($AzureSQL -eq "Yes") {
         # StorageAccountKey
         # StorageAccountLocation
         # ExistingAzureSqlDatabase
-        ('$HardcodeDatabaseServer = "'+$sqlDBsrvName+'"')                       | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
+        ('$HardcodeDatabaseServer = "'+$sqlDBSrvName+'"')                       | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
         ('$HardcodeDatabaseUserName = "'+$sqlAdminLoginName+'"')                | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
-        ('$HardcodeDatabaseName = "'+$sqlDBname+'"')                            | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
+        ('$HardcodeDatabaseName = "'+$sqlDBName+'"')                            | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
         ('$HardcodeExistingAzureSqlDatabase = "'+$ExistingAzureSqlDatabase+'"') | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
         ('$HardcodeDatabasePassword = "'+$sqlAdminLoginPassword+'"')            | Add-Content "c:\DEMO\AzureSQL\HardcodeInput.ps1"
         . 'c:\DEMO\AzureSQL\install.ps1' 4> 'C:\DEMO\AzureSQL\install.log'
